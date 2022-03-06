@@ -78,6 +78,21 @@ form span{
     top:-20px;
     opacity: 1px;
 }
-.inputBox span.title{
-    margin-left: 30px;
+.checkBox {
+    display: flex;
+    align-items: center;
+}
+.checkBox input{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px
+}
+form input[type="submit"]{
+    padding: 5px 15px;
+    margin: 10px 5px;
+    border-radius: 10px;
+    text-align: justify;
+    font-size: 20px;
+    font-family: cursive,serif;
+    background: transparent;
 }

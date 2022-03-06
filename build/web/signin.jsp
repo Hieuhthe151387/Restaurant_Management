@@ -30,7 +30,7 @@
                    <div class="checkBox">
                        <input type="checkbox" value="remember"><span class="title">Remember me.</span>
                    </div>
-                   <input type="submit" value="login">
+                   <input type="submit" value="Login">
                </form>
         </div>
     </body>
