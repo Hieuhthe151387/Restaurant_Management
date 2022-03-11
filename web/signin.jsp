@@ -17,8 +17,8 @@
             <p>Hello</p>
         </div>
         <div class="box">
-            <h2>Login<h2>
-               <form>
+            <h2>Login</h2>
+                    <form action="login" method="post">
                    <div class="inputBox">
                        <input type="text" name="account" required title="nhập đúng toàn chữ">
                        <span>User name</span>
@@ -27,6 +27,7 @@
                        <input type="password" name="password" required title="nhập đúng toàn chữ">
                        <span>Password</span>
                    </div>
+                   <div class="error">${requestScope.error}</div>
                    <div class="checkBox">
                        <input type="checkbox" value="remember"><span class="title">Remember me.</span>
                    </div>
