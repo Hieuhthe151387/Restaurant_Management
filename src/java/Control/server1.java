@@ -5,6 +5,8 @@
  */
 package Control;
 
+import DAO.DBconnect;
+import Model.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -57,7 +59,8 @@ public class server1 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("signin.jsp").forward(request, response);
     }
 
     /**
@@ -72,17 +75,25 @@ public class server1 extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         DBconnect db = new DBconnect();
-        String account = request.getParameter("accont");
+        String account = request.getParameter("account");
         String password = request.getParameter("password");
         String check = request.getParameter("check");
-        if(db.check_account(account, password)){
+        Account a = db.getAccount(account, password);
+        if(a!=null){
             if (check!=null){
-                Cookie cooky = new Cookie("accont", account);
+                Cookie cooky;
+                cooky = new Cookie("account",account);
                 cooky.setMaxAge(24*3600);
                 response.addCookie(cooky);
             }
-        request.getSession().setAttribute("user", account);
-        } else response.sendError(401);
+            response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("error", "Login successful!");
+            request.getSession().setAttribute("user", a);
+        }else{
+            response.setContentType("text/html;charset=UTF-8");
+            request.setAttribute("error", "Login false!Check you account");
+            request.getRequestDispatcher("signin.jsp").forward(request, response);
+        };
     }
 
     /**

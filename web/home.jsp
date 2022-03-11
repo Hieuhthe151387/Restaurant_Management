@@ -68,7 +68,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+                                    <a href="employee.jsp">
 					<span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
 					<span class="title">
 						Employee

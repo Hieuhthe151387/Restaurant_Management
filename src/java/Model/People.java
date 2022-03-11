@@ -16,8 +16,6 @@ public class People{
     private String address;
     private String phoneNumber;
     private String account;
-    private String password;
-    private String userName;
     public People() {
     }
 
@@ -30,16 +28,6 @@ public class People{
         this.account = account;
     }
 
-    public People(String ID, String name, boolean gender, String address, String phoneNumber, String account, String password, String userName) {
-        this.ID = ID;
-        this.name = name;
-        this.gender = gender;
-        this.address = address;
-        this.phoneNumber = phoneNumber;
-        this.account = account;
-        this.password = password;
-        this.userName = userName;
-    }
 
     public String getID() {
         return ID;
@@ -90,26 +78,4 @@ public class People{
     public void setAccount(String account) {
         this.account = account;
     }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getUserName() {
-        return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
-
-     
-
-    
-    
-    
 }

@@ -20,12 +20,12 @@
             <h2>Login</h2>
                     <form action="login" method="post">
                    <div class="inputBox">
-                       <input type="text" name="account" required title="nhập đúng toàn chữ">
-                       <span>User name</span>
+                       <input type="text" id="acc" name="account" required title="nhập đúng toàn chữ">
+                       <label for="acc">Username</label>
                    </div>
                    <div class="inputBox">
-                       <input type="password" name="password" required title="nhập đúng toàn chữ">
-                       <span>Password</span>
+                       <input type="password" id="pass" name="password" required title="nhập đúng toàn chữ">
+                       <label for="pass">Password</label>
                    </div>
                    <div class="error">${requestScope.error}</div>
                    <div class="checkBox">

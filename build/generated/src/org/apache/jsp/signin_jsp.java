@@ -56,24 +56,27 @@ public final class signin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            <p>Hello</p>\n");
       out.write("        </div>\n");
       out.write("        <div class=\"box\">\n");
-      out.write("            <h2>Login<h2>\n");
-      out.write("               <form>\n");
+      out.write("            <h2>Login</h2>\n");
+      out.write("                    <form action=\"login\" method=\"post\">\n");
       out.write("                   <div class=\"inputBox\">\n");
-      out.write("                       <input type=\"text\" name=\"account\" required title=\"nhập đúng toàn chữ\">\n");
-      out.write("                       <span>User name</span>\n");
+      out.write("                       <input type=\"text\" id=\"acc\" name=\"account\" required title=\"nhập đúng toàn chữ\">\n");
+      out.write("                       <label for=\"acc\">Username</label>\n");
       out.write("                   </div>\n");
       out.write("                   <div class=\"inputBox\">\n");
-      out.write("                       <input type=\"password\" name=\"password\" required title=\"nhập đúng toàn chữ\">\n");
-      out.write("                       <span>Password</span>\n");
+      out.write("                       <input type=\"password\" id=\"pass\" name=\"password\" required title=\"nhập đúng toàn chữ\">\n");
+      out.write("                       <label for=\"pass\">Password</label>\n");
       out.write("                   </div>\n");
+      out.write("                   <div class=\"error\">");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${requestScope.error}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+      out.write("</div>\n");
       out.write("                   <div class=\"checkBox\">\n");
       out.write("                       <input type=\"checkbox\" value=\"remember\"><span class=\"title\">Remember me.</span>\n");
       out.write("                   </div>\n");
-      out.write("                   <input type=\"submit\" value=\"login\">\n");
+      out.write("                   <input type=\"submit\" value=\"Login\">\n");
       out.write("               </form>\n");
       out.write("        </div>\n");
       out.write("    </body>\n");
-      out.write("</html>\n");
+      out.write("</html>");
     } catch (Throwable t) {
       if (!(t instanceof SkipPageException)){
         out = _jspx_out;

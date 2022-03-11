@@ -20,11 +20,6 @@ public class Customer extends People{
         super(ID, name, gender, address, phoneNumber, account);
         this.AgeRange = AgeRange;
     }
-
-    public Customer( String ID, String name,int AgeRange, boolean gender, String address, String phoneNumber, String account, String password, String userName) {
-        super(ID, name, gender, address, phoneNumber, account, password, userName);
-        this.AgeRange = AgeRange;
-    }
     
     public int getAgeRange() {
         return AgeRange;
