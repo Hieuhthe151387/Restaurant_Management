@@ -111,7 +111,7 @@
 						<h2>Nhân Viên</h2>
 						<div onclick="createemployee()" class="btn">Thêm</div>
 					</div>
-                                        <c:if test="${listemployee!=null||listemployee.size()!=0}">                                        
+                                        <c:if test="${listemployee!=null&&listemployee.size()!=0}">                                        
 					<table>
 						<thead>
 							<tr >
@@ -123,7 +123,7 @@
 						</thead>
 						<tbody>
                                                     <c:forEach var="employee" items="${listemployee}">
-                                                        <tr class="emdata" id="${employee.getId()}">
+                                                        <tr class="emdata" id="${employee.getID()}">
 								<td>1</td>
 								<td>${employee.name}</td>
 								<td>${employee.shortname}</td>
@@ -139,11 +139,11 @@
 						<h2>Employee Detail</h2>
 						<span class="close" onclick="closeCard()"><i class="fa fa-times" aria-hidden="true"></i></span>
 					</div>
-                                    <div class="empty <%=request.getAttribute("employeeview")==null?"":"hidden"%>">
+                                    <div class="empty <c:if test="${employeeview!=null}">hidden</c:if>">
 						<div class="icon"><i class="fa fa-archive" aria-hidden="true"></i></div>
 						<div class="h2">Choose one employee to see this one's info</div>
 					</div>
-					<div class="session <c:if test="$employeeview==null">hidden</c:if>">
+					<div class="session <c:if test="${employeeview==null}">hidden</c:if>">
 						<form method="post" name="employeedetails">
             <div class="info">
 		<div class="imgBx">
@@ -253,7 +253,7 @@
 						<header>
 							<h2>Create new employees</h2>
 						</header>
-						<form name="addemployee" method="post">
+                                                <form name="addemployee" method="post"><input type="text" hidden name="req" value="c"/>
 	<div class="info">
 		<div class="imgBx">
 			<img src="images/user.png" alt="user"/>

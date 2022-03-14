@@ -36,7 +36,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="home.jsp">
 					<span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span>
 					<span class="title">
 						Dashboard
@@ -108,6 +108,119 @@
    					<img src="images/user.png" alt="user">
    				</div>
    			</div>
+   			<div class="cardBox">
+				<div class="card">
+					<div>
+						<div class="numbers">Hi</div>
+						<div class="cardName">Quản lý</div>
+					</div>
+					<div class="iconBox">
+						<i class="fa fa-male" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="card">
+					<div>
+						<div class="numbers">20</div>
+						<div class="cardName">Order</div>
+					</div>
+					<div class="iconBox">
+						<i class="fa fa-cart-plus" aria-hidden="true"></i>
+					</div>
+				</div>
+				<div class="card">
+					<div>
+						<div class="numbers">15</div>
+						<div class="cardName">Sales</div>
+					</div>
+					<div class="iconBox">
+						<i class="fa fa-usd" aria-hidden="true"></i>
+					</div>
+				</div>
+				
+				<div class="card">
+					<div>
+						<div class="numbers">6.042</div>
+						<div class="cardName">Earning</div>
+					</div>
+					<div class="iconBox">						
+						<i class="fa fa-money" aria-hidden="true"></i>
+					</div>
+				</div>
+			</div>
+			<div class="details">
+				<div class="recentOrders">
+					<div class="cardHeader">
+						<h2>Recent Orders</h2>
+						<a href="#" class="btn">View all</a>
+					</div>
+					<table>
+						<thead>
+							<tr>
+								<td>STT</td>
+								<td>Cust</td>
+								<td>Position</td>
+								<td>Status</td>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td>1</td>
+								<td>Khach le</td>
+								<td><span class="position delivery">Delivery</span></td>
+								<td><span class="status cancel">Cancel</span></td>
+							</tr>
+							<tr>
+								<td>2</td>
+								<td>Khach le</td>
+								<td><span class="position delivery">Delivery</span></td>
+								<td><span class="status pending">Pending</span></td>
+							</tr>
+							<tr>
+								<td>3</td>
+								<td>Khách Hoàng</td>
+								<td><span class="position inplace">Tại quán</span></td>
+								<td><span class="status complety">Complety</span></td>
+							</tr>
+							<tr>
+								<td>4</td>
+								<td>Anh Khang</td>
+								<td><span class="position inplace">Tại quán</span></td>
+								<td><span class="status inprogress">In Progress</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="recentEmployees">
+					<div class="cardHeader">
+						<h2>Recent Customers</h2>
+						<!-- <a href="#" class="bth">View all</a> -->
+					</div>
+					<table>
+						<tbody>
+							<tr>
+								<td with="60px"><div class="imgBx"><img src="images/user.png"></div></td>
+								<td><h4>Bác K</h4><span>Bếp trưởng</span></td>
+							</tr>
+							<tr>
+								<td with="60px"><div class="imgBx"><img src="images/user.png"></div></td>
+								<td><h4>Chị H</h4><span>Quản lý</span></td>
+							</tr>
+							<tr>
+								<td with="60px"><div class="imgBx"><img src="images/user.png"></div></td>
+								<td><h4>Anh N</h4><span>Phụ bếp</span></td>
+							</tr>
+							<tr>
+								<td with="60px"><div class="imgBx"><img src="images/user.png"></div></td>
+								<td><h4>H phục vụ</h4><span>Phục vụ</span></td>
+							</tr>
+							<tr>
+								<td with="60px"><div class="imgBx"><img src="images/user.png"></div></td>
+								<td><h4>Bác T</h4><span>Nhân viên thu mua</span></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
    		</div>
 	</div>
 	

@@ -63,7 +63,7 @@ public class employee extends HttpServlet {
         DBconnect db = new DBconnect();
         ArrayList<Employee> list = db.getListEmployees();
         request.getSession().setAttribute("listemployee", list);
-        request.getRequestDispatcher("/employee.jsp");
+        request.getRequestDispatcher("/employee.jsp").forward(request, response);
     }
 
     /**
@@ -92,7 +92,7 @@ public class employee extends HttpServlet {
             case "c":break;
             default: break;
         }
-        request.getRequestDispatcher("/"+request.getContextPath()+"/employee.jsp");
+        request.getRequestDispatcher("/"+request.getContextPath()+"/employee.jsp").forward(request, response);
     }
 
     /**
