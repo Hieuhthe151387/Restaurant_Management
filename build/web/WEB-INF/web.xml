@@ -23,6 +23,7 @@
     </servlet-mapping>
     <servlet-mapping>
         <servlet-name>employee</servlet-name>
+        <url-pattern>/create</url-pattern>
         <url-pattern>/employee</url-pattern>
     </servlet-mapping>
     <session-config>

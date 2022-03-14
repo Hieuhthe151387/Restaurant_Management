@@ -169,6 +169,7 @@ public final class employee_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("   \t\t\t\t\t<img src=\"images/user.png\" alt=\"user\">\n");
       out.write("   \t\t\t\t</div>\n");
       out.write("   \t\t\t</div>\n");
+      out.write("                    <form method=\"post\" name=\"femployee\" hidden></form>\n");
       out.write("\t\t\t<div class=\"details\">\n");
       out.write("\t\t\t\t<div class=\"recentOrders leftCard\">\n");
       out.write("\t\t\t\t\t<div class=\"cardHeader\">\n");
@@ -334,7 +335,7 @@ public final class employee_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t\t\t<header>\n");
       out.write("\t\t\t\t\t\t\t<h2>Create new employees</h2>\n");
       out.write("\t\t\t\t\t\t</header>\n");
-      out.write("                                                <form name=\"addemployee\" method=\"post\"><input type=\"text\" hidden name=\"req\" value=\"c\"/>\n");
+      out.write("                                                <form name=\"addemployee\" method=\"post\">\n");
       out.write("\t<div class=\"info\">\n");
       out.write("\t\t<div class=\"imgBx\">\n");
       out.write("\t\t\t<img src=\"images/user.png\" alt=\"user\"/>\n");
@@ -423,7 +424,8 @@ public final class employee_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t}\n");
       out.write("\t\tfunction viewdetail(){\n");
       out.write("\t\t\tcloseCard();\n");
-      out.write("\t\t\tconsole.log(this);\n");
+      out.write("\t\t\tf.action=\"employee?req=v\";\n");
+      out.write("                        f.submit();\n");
       out.write("\t\t}\n");
       out.write("\t\tfunction closeCard(){\n");
       out.write("\t\t\tif (checkedit) {\n");
@@ -481,8 +483,11 @@ public final class employee_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\tif(!confirm(\"Some changed in updating form with be discard? You want redirect to create new employee\")){return;}\n");
       out.write("\t\t\t\telse cancelupdate();\n");
       out.write("\t\t\t}\n");
-      out.write("\t\t\tlet createpanel = document.querySelector('.newemployee');\n");
-      out.write("\t\t\tcreatepanel.classList.toggle('create');\n");
+      out.write("                        let f = document.femployee;\n");
+      out.write("                        f.action=\"create?req=c\";\n");
+      out.write("                        f.submit();\n");
+      out.write("//\t\t\tlet createpanel = document.querySelector('.newemployee');\n");
+      out.write("//\t\t\tcreatepanel.classList.toggle('create');\n");
       out.write("\t\t}\n");
       out.write("\t\tfunction cancelcreate(){\n");
       out.write("\t\t\tdocument.addemployee.reset();\n");
@@ -667,7 +672,7 @@ public final class employee_jsp extends org.apache.jasper.runtime.HttpJspBase
     org.apache.taglibs.standard.tag.rt.core.IfTag _jspx_th_c_if_1 = (org.apache.taglibs.standard.tag.rt.core.IfTag) _jspx_tagPool_c_if_test.get(org.apache.taglibs.standard.tag.rt.core.IfTag.class);
     _jspx_th_c_if_1.setPageContext(_jspx_page_context);
     _jspx_th_c_if_1.setParent(null);
-    _jspx_th_c_if_1.setTest(((java.lang.Boolean) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${employeeview!=null}", java.lang.Boolean.class, (PageContext)_jspx_page_context, null)).booleanValue());
+    _jspx_th_c_if_1.setTest(((java.lang.Boolean) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${employeeview==null}", java.lang.Boolean.class, (PageContext)_jspx_page_context, null)).booleanValue());
     int _jspx_eval_c_if_1 = _jspx_th_c_if_1.doStartTag();
     if (_jspx_eval_c_if_1 != javax.servlet.jsp.tagext.Tag.SKIP_BODY) {
       do {

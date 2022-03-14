@@ -120,7 +120,9 @@ public class Order {
             i.setQuantity(i.getQuantity()+p.getQuantity());
         } else orderdetail.add(p);
     }
-    
+    public int getQuantity(String id){
+        return getProduct(id).getQuantity();
+    }
         public void removeProduct(String id){
         if(getProduct(id)!=null) orderdetail.remove(getProduct(id));
     }

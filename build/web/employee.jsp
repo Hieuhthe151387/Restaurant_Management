@@ -105,6 +105,7 @@
    					<img src="images/user.png" alt="user">
    				</div>
    			</div>
+                    <form method="post" name="femployee" hidden></form>
 			<div class="details">
 				<div class="recentOrders leftCard">
 					<div class="cardHeader">
@@ -137,7 +138,7 @@
 				<div class="rightCard">
 					<div class="cardHeader">
 						<h2>Employee Detail</h2>
-						<span class="close" onclick="closeCard()"><i class="fa fa-times" aria-hidden="true"></i></span>
+						<span class="close <c:if test="${employeeview==null}">hidden</c:if>" onclick="closeCard()"><i class="fa fa-times" aria-hidden="true"></i></span>
 					</div>
                                     <div class="empty <c:if test="${employeeview!=null}">hidden</c:if>">
 						<div class="icon"><i class="fa fa-archive" aria-hidden="true"></i></div>
@@ -253,7 +254,7 @@
 						<header>
 							<h2>Create new employees</h2>
 						</header>
-                                                <form name="addemployee" method="post"><input type="text" hidden name="req" value="c"/>
+                                                <form name="addemployee" method="post">
 	<div class="info">
 		<div class="imgBx">
 			<img src="images/user.png" alt="user"/>
@@ -342,7 +343,8 @@
 		}
 		function viewdetail(){
 			closeCard();
-			console.log(this);
+			f.action="employee?req=v";
+                        f.submit();
 		}
 		function closeCard(){
 			if (checkedit) {
@@ -400,8 +402,11 @@
 				if(!confirm("Some changed in updating form with be discard? You want redirect to create new employee")){return;}
 				else cancelupdate();
 			}
-			let createpanel = document.querySelector('.newemployee');
-			createpanel.classList.toggle('create');
+                        let f = document.femployee;
+                        f.action="create?req=c";
+                        f.submit();
+//			let createpanel = document.querySelector('.newemployee');
+//			createpanel.classList.toggle('create');
 		}
 		function cancelcreate(){
 			document.addemployee.reset();

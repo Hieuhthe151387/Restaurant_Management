@@ -59,8 +59,13 @@ public class server1 extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.getRequestDispatcher("signin.jsp").forward(request, response);
+        String account = request.getParameter("account");
+        String password = request.getParameter("password");
+        if(account!=null) doPost(request, response);
+        else{
+            response.setContentType("text/html;charset=UTF-8");
+            request.getRequestDispatcher("signin.jsp").forward(request, response);
+        }
     }
 
     /**
@@ -81,13 +86,16 @@ public class server1 extends HttpServlet {
         Account a = db.getAccount(account, password);
         if(a!=null){
             if (check!=null){
-                Cookie cooky;
-                cooky = new Cookie("account",account);
-                cooky.setMaxAge(24*3600);
-                response.addCookie(cooky);
+                Cookie cooky1,cooky2;
+                cooky1 = new Cookie("acc", account);
+                cooky2 = new Cookie("pass", password);
+                cooky1.setMaxAge(24*3600);
+                response.addCookie(cooky1);
+                cooky2.setMaxAge(24*3600);
+                response.addCookie(cooky2);
             }
             response.setContentType("text/html;charset=UTF-8");
-            request.setAttribute("error", "Login successful!");
+            request.setAttribute("error", "Login successful!"+check);
             request.getSession().setAttribute("user", a);
         }else{
             response.setContentType("text/html;charset=UTF-8");
