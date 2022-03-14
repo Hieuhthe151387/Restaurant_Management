@@ -8,6 +8,10 @@
         <servlet-name>home</servlet-name>
         <servlet-class>Control.home</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>employee</servlet-name>
+        <servlet-class>Control.employee</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>server1</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -16,6 +20,10 @@
     <servlet-mapping>
         <servlet-name>home</servlet-name>
         <url-pattern>/home</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>employee</servlet-name>
+        <url-pattern>/employee</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

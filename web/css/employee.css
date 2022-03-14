@@ -1,0 +1,199 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 14-Mar-2022, 06:38:54
+    Author     : Admin
+*/
+/* Overriden style of style.css */
+.details{
+	padding-top: 20px;
+	display: grid ;
+	grid-template-columns: 1.5fr 2.5fr;
+}
+/*sticky thead and right card*/
+.main{
+	height: 100vh;
+	overflow: scroll;
+} 
+.details .leftCard table thead{
+	position: sticky;
+	top: 0;
+	background: #fff;
+	align-self: start;
+}
+.details .rightCard{
+	position: sticky;
+	top: 0;
+	align-self: start;
+    height: 600px;
+}
+
+.details .rightCard .cardHeader .close{
+	transition-delay: 0.5s;
+	font-size: 2rem;
+}
+.details .rightCard .cardHeader .close:hover{
+	color: red;
+}
+/*------------------------- Here done ----------------------------------- 
+	style right card
+*/
+.details .rightCard .empty{
+	display: flex;
+	position: absolute;
+	top: 0;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+}
+.empty{
+
+	font-size: 3em;
+	opacity: 0.5;
+}
+.empty .h2{
+	font-size: 20px;
+	text-align: center;
+}
+.details .rightCard .hidden{
+	display: none;
+}
+/* Style form info of employee*/
+
+
+.details .rightCard .info {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	margin: 10px 50px;
+	margin-top: 100px;
+	background: white;
+}
+.details .rightCard .info .addressBx{
+	display: flex;
+}
+.details .rightCard .info .header{
+	display: flex;
+	margin-top: 100px;
+	flex-wrap: wrap;
+}
+.details .rightCard .info .imgBx{
+	position: absolute;
+	right: 50%;
+	transform: translate(50%,-60%);
+	width: 150px;
+ 	height: 170px;
+ 	min-width: 150px;
+ 	min-height: 170px;
+ 	border-radius: 50%;
+ 	overflow: hidden;
+}
+.details .rightCard .info .imgBx img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.details .rightCard .info .inputBx{
+	position: relative;
+	width: 200px;
+	height: 30px;
+	margin-bottom: 25px;
+	padding: 5px;
+}
+.details .rightCard .info .addressBx .inputBx{
+			width: 120px;
+	}
+.details .rightCard .info .inputBx span,
+.details .rightCard .info .inputBx label{
+	position: absolute;
+}
+.details .rightCard .info .inputBx span{
+		font-size: 14px;
+		top: -20px;
+		left: 0;
+		padding: 5px;
+}
+.details .rightCard .info .inputBx label{
+		right:0;
+		top: 0;
+		padding: 5px;
+		opacity: 0.3;
+}
+.details .rightCard .info .inputBx input[type="text"],
+.details .rightCard .info .inputBx input[type="date"]{
+   		width: 100%;
+   		height: 100%;
+   		border: none;
+   		font-size: 16px;
+   		transition: 1s;
+   		transition-timing-function: ease-in-out;
+   		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+   	}
+.details .rightCard .info .inputBx input[type="text"]:focus,
+.details .rightCard .info .inputBx input:focus{
+   		outline: none;
+   		border-color: rgba(94, 255, 148, 1.0);
+}
+.details .rightCard .info .inputBx label{
+	transition-duration: 1s;
+	transition-delay: 1s;
+	transition-timing-function: ease-in-out;
+}
+.details .rightCard .info .inputBx:hover label,
+.details .rightCard .info .inputBx:focus label{
+	opacity: 1;
+	color: rgba(94, 255, 148, 1);
+}
+/*  ++++++++++++++++++++++Style footer ++++++++++++++++++++ */
+form .footer{
+	display: flex;
+	justify-content: flex-end;
+}
+form .footer .btnf{
+	border: 1px solid rgba(0, 0, 0, 0.8);
+	margin: 10px;
+	padding: 5px 10px;
+	font-size: 20px;
+	border-radius: 6px;
+} 
+form .footer #cancel{
+	background: #1795ce;	
+}
+form .footer #delete{
+	color: white;
+	background: #f00;
+}
+form .footer #update{
+	background: #8de02c;
+}
+form .footer .btnf:hover{
+	border: none;
+	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+}
+/*---------------------------Style create card-------------------------------*/
+.details .rightCard .newemployee{
+    overflow: hidden;
+    z-index: -1;
+    position: absolute;
+    height: 0;
+    width: 0;
+    top: 0;
+    left: 0;
+    transition-duration: 1s;
+    background: #fff;
+}
+.details .rightCard .newemployee header{
+	margin: 10px;
+}
+
+.details .rightCard .create{
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+}

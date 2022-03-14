@@ -12,6 +12,7 @@ package Model;
 public class People{
     private String ID;
     private String name;
+    private String shortname;
     private boolean gender;
     private String address;
     private String phoneNumber;
@@ -19,6 +20,16 @@ public class People{
     public People() {
     }
 
+    public People(String ID, String name, String shortname, boolean gender, String address, String phoneNumber, String account) {
+        this.ID = ID;
+        this.name = name;
+        this.shortname = shortname;
+        this.gender = gender;
+        this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.account = account;
+    }
+    
     public People(String ID, String name, boolean gender, String address, String phoneNumber, String account) {
         this.ID = ID;
         this.name = name;
@@ -77,5 +88,17 @@ public class People{
 
     public void setAccount(String account) {
         this.account = account;
+    }
+
+    public void setShortname(String shortname) {
+        this.shortname = shortname;
+    }
+
+    public String getShortname() {
+        return shortname;
+    }
+    
+    public String getAddress(int i){
+        return this.address.split(",")[i].trim();
     }
 }

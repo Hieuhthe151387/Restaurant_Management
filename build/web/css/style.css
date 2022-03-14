@@ -1,0 +1,182 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11-Mar-2022, 12:23:01
+    Author     : Admin
+*/
+
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: cursive,sans-serif ;
+}
+body{
+	overflow-x: hidden;
+}
+.container{
+	position: relative;
+	width: 100%;
+}
+.navigation{
+	position: fixed;
+	width: 300px;
+	height: 100%;
+	background: #003147;
+	transition: 0.5s;
+	overflow: hidden;
+}
+/*change width of active navigation*/
+.navigation.active{
+	width: 60px;
+}
+.navigation ul{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.navigation ul li {
+	position: relative;
+	width: 100%;
+	list-style: none;
+}
+.navigation ul li:nth-child(1) .fa{
+	margin-bottom:30px ;
+}
+.navigation ul li:last-child{
+	margin-top: 30px;
+}
+.navigation ul li:hover{
+	background: #03a94f;
+}
+/*reset hover effect to logo span which is first child of class navigation*/
+.navigation ul li:nth-child(1):hover{
+	background: transparent;/*ke thua lai thuoc tinh cua class cha*/
+}
+
+.navigation ul li a{
+	position: relative;
+	display: block;
+	width: 100%;
+	display: flex;
+	text-decoration: none;
+	color: #fff;
+}
+
+.navigation ul li a .icon
+{
+	position: relative;
+	display: block;
+	min-width: 60px;
+	min-height: 60px;
+	line-height: 50px;
+	margin-top: 6px;
+	text-align: center;
+}
+
+.navigation ul li a .icon .fa 
+{
+	color: #fff;
+	font-size: 30px;
+}
+
+.navigation ul li a .title
+{
+	position: relative;
+	display: block;
+	height: 60px;
+	padding: 0 10px;
+	line-height: 60px;
+	white-space: nowrap;
+}
+.main
+{
+	position: absolute;
+	width: calc(100% - 300px);
+	left: 300px;
+	min-height: 100vh;
+	background: #f5f5f5;
+	overflow: hidden;
+	transition: 0.5s;
+}
+/*change width of active main*/
+.main.active{
+	width: calc(100% - 60px);
+	left: 60px;
+}
+.main .topbar {
+	width: 100%;
+	background: #fff;
+	height: 60px;
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.toggle
+{
+	position: relative;
+	width: 60px;
+	height: 60px;
+	cursor: pointer;
+}
+.toggle:before
+{
+	content: '\2261';
+	font-family: sans-serif;
+	position: absolute;
+	font-size: 47px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: #111;
+}
+
+/*style search bar*/
+.search
+{
+	position: relative;
+	width: 400px;
+	margin: 10px 0;
+}
+.search label
+{
+	position: relative;
+	width: 100%;
+}
+.search label input{
+	width: 100%;
+	height: 40px;
+	border-radius: 20px;
+	padding: 5px 10px;
+	padding-left: 35px;
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.search label .fa{
+	position: absolute;
+	left: 15px;
+	top: 0;
+}
+
+/*Style for user */
+.user{
+	position: relative;
+	width: 50px;
+	height: 50px;
+	min-width: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.user img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;/*set width and height of img = father class*/
+	height: 100%;
+	object-fit: cover;
+}

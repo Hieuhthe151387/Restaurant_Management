@@ -22,6 +22,15 @@ public class Employee extends People {
         super();
     }
 
+    public Employee(String ID, String name, boolean gender, Date Dob, String phoneNumber,String address,String role, 
+            double salary, String manage,String account,String shortname) {
+        super(ID, name, shortname, gender, address, phoneNumber, account);
+        this.Dob = Dob;
+        this.role = role;
+        this.manager = manage;
+        this.salary = salary;
+    }
+    
     public Employee(String ID, String name, boolean gender, Date Dob,String address, String phoneNumber,String role, double salary, String account) {
         super(ID, name, gender, address, phoneNumber, account);
         this.Dob = Dob;
@@ -36,21 +45,13 @@ public class Employee extends People {
         this.role = role;
         this.salary = salary;
     }
-
-    public Employee(String ID, String name, boolean gender,Date Dob, String address, String phoneNumber, String role, double salary, String account, String userName,String manager) {
-        super(ID, name, gender, address, phoneNumber, account);
-        this.Dob = Dob;
-        this.manager = manager;
-        this.role = role;
-        this.salary = salary;
-    }
     
     public Date getDob() {
         return Dob;
     }
     
     public String getDoB(){
-        SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         return df.format(Dob);
     }
     
