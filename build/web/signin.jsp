@@ -12,16 +12,20 @@
         <title>JSP Page</title>
         <link href="css/signin.css" rel="stylesheet" type="text/css"/>
         <% 
-            if(request.getCookies().length>1){
+            boolean logout = request.getParameter("logout")==null;
+            if(request.getCookies().length>1&&logout){
+                String account="",password="";
                 for(Cookie c :request.getCookies()){
                     if(c.getName().equals("acc")){
+                        account = c.getValue();
                         request.setAttribute("account", c.getValue());
                     }
                     if(c.getName().equals("pass")){
                         request.setAttribute("password", c.getValue());
+                        password = c.getValue();
                     }
                 }
-                response.sendRedirect("login");
+                response.sendRedirect("login?account="+account+"&&password="+password);
             }
         %>
     </head>
@@ -44,7 +48,7 @@
                    </div>
                    <div class="error">${requestScope.error}</div>
                    <div class="checkBox">
-                       <input type="checkbox" value="remember"><span class="title">Remember me.</span>
+                       <input type="checkbox" name="check" value="remember"><span class="title">Remember me.</span>
                    </div>
                    <input type="submit" value="Login">
                </form>

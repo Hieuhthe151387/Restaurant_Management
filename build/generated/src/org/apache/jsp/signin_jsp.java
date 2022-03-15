@@ -52,15 +52,20 @@ public final class signin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("        <link href=\"css/signin.css\" rel=\"stylesheet\" type=\"text/css\"/>\n");
       out.write("        ");
  
-            if(request.getCookies().length>0){
+            boolean logout = request.getParameter("logout")==null;
+            if(request.getCookies().length>1&&logout){
+                String account="",password="";
                 for(Cookie c :request.getCookies()){
                     if(c.getName().equals("acc")){
+                        account = c.getValue();
                         request.setAttribute("account", c.getValue());
                     }
                     if(c.getName().equals("pass")){
                         request.setAttribute("password", c.getValue());
+                        password = c.getValue();
                     }
                 }
+                response.sendRedirect("login?account="+account+"&&password="+password);
             }
         
       out.write("\n");
@@ -75,18 +80,22 @@ public final class signin_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("            <h2>Login</h2>\n");
       out.write("                    <form action=\"login\" method=\"post\">\n");
       out.write("                   <div class=\"inputBox\">\n");
-      out.write("                       <input type=\"text\" id=\"acc\" onchange=\"console.log(this.value)\" name=\"account\" required title=\"nhập đúng toàn chữ\">\n");
+      out.write("                       <input type=\"text\" id=\"acc\" onchange=\"console.log(this.value)\" value=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${requestScope.account}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+      out.write("\" name=\"account\" required title=\"nhập đúng tài khoản\">\n");
       out.write("                       <label for=\"acc\">Username</label>\n");
       out.write("                   </div>\n");
       out.write("                   <div class=\"inputBox\">\n");
-      out.write("                       <input type=\"password\" id=\"pass\" name=\"password\" required title=\"nhập đúng toàn chữ\">\n");
+      out.write("                       <input type=\"password\" id=\"pass\" name=\"password\" value=\"");
+      out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${requestScope.password}", java.lang.String.class, (PageContext)_jspx_page_context, null));
+      out.write("\" required title=\"nhập đúng mật khẩu\">\n");
       out.write("                       <label for=\"pass\">Password</label>\n");
       out.write("                   </div>\n");
       out.write("                   <div class=\"error\">");
       out.write((java.lang.String) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${requestScope.error}", java.lang.String.class, (PageContext)_jspx_page_context, null));
       out.write("</div>\n");
       out.write("                   <div class=\"checkBox\">\n");
-      out.write("                       <input type=\"checkbox\" value=\"remember\"><span class=\"title\">Remember me.</span>\n");
+      out.write("                       <input type=\"checkbox\" name=\"check\" value=\"remember\"><span class=\"title\">Remember me.</span>\n");
       out.write("                   </div>\n");
       out.write("                   <input type=\"submit\" value=\"Login\">\n");
       out.write("               </form>\n");

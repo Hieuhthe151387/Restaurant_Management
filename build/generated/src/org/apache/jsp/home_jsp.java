@@ -139,7 +139,7 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t\t</a>\n");
       out.write("\t\t\t\t</li>\n");
       out.write("\t\t\t\t<li>\n");
-      out.write("                                    <a href=\"employee.jsp\">\n");
+      out.write("                                    <a href=\"employee\">\n");
       out.write("\t\t\t\t\t<span class=\"icon\"><i class=\"fa fa-users\" aria-hidden=\"true\"></i></span>\n");
       out.write("\t\t\t\t\t<span class=\"title\">\n");
       out.write("\t\t\t\t\t\tEmployee\n");
@@ -155,7 +155,7 @@ public final class home_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t\t</a>\n");
       out.write("\t\t\t\t</li>\n");
       out.write("\t\t\t\t<li>\n");
-      out.write("\t\t\t\t\t<a href=\"#\">\n");
+      out.write("                                    <a href=\"signin.jsp?logout=out\">\n");
       out.write("\t\t\t\t\t<span class=\"icon\"><i class=\"fa fa-sign-out\" aria-hidden=\"true\"></i></span>\n");
       out.write("\t\t\t\t\t<span class=\"title\">\n");
       out.write("\t\t\t\t\t\tLogout\n");

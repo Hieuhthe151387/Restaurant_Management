@@ -8,7 +8,7 @@ package DAO;
 import Model.Account;
 import Model.Employee;
 import java.sql.Connection;
-import java.util.Date;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -74,16 +74,18 @@ public class DBconnect {
                 em.setAddress(rs.getString("Address"));
                 em.setRole(rs.getString("Role"));
                 em.setSalary(rs.getDouble("Salary"));
+                em.setShortname(rs.getString("Shortname"));
             }
         } catch (Exception e) {
         }
         return em;
     }
     public Employee getEmployeeById(String id){
-        String query = "select * from EmployeesTB where EmployeeId="+id;// get Employee by account have been check
+        String query = "select * from EmployeesTB where EmployeeId=?";
         Employee em = new Employee();
         try {
             PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1,id);
             ResultSet rs = statement.executeQuery();
             if(rs.next()) {                
                 em.setID(rs.getString("EmployeeId"));
@@ -153,18 +155,19 @@ public class DBconnect {
         
         public void updateEmployee(Employee e){
             String update ="UPDATE EmployeesTB SET EmployeeName = ?,Gender=?, Dob=?," +
-            "PhoneNumber =?,[Address]=?,[Role]=?,Salary= ?,ManagerID=null,Account=null," +
+            "PhoneNumber =?,[Address]=?,[Role]=?,Salary= ?,ManagerID=null," +//,Account=null ?
             "ShortName=? WHERE EmployeeId=?" ;
              try {
             PreparedStatement statement = con.prepareStatement(update);
             statement.setString(1,e.getName());
             statement.setBoolean(2,e.isGender());
-            statement.setString(3,e.getPhoneNumber());
-            statement.setString(4,e.getAddress());
-            statement.setString(5,e.getRole());
-            statement.setDouble(6,e.getSalary());
-            statement.setString(7,e.getShortname());
-            statement.setString(8,e.getID());
+            statement.setDate(3, e.getDob());
+            statement.setString(4,e.getPhoneNumber());
+            statement.setString(5,e.getAddress());
+            statement.setString(6,e.getRole());
+            statement.setDouble(7,e.getSalary());
+            statement.setString(8,e.getShortname());
+            statement.setString(9,e.getID());
              statement.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
@@ -193,27 +196,57 @@ public class DBconnect {
         }
         return list;
     }
+    public int deleteEmployee(String id){
+        String sql = "DELETE FROM EmployeesTB WHERE EmployeeId = ?";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1, id);
+            int i = state.executeUpdate();
+            return i;
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return 0;
+    }
 }
 class demo {
     public static void main(String[] args) {
         DBconnect con = new DBconnect();
-//        for(Employee e : con.getListEmployees()){
-//        System.out.println(e.getID()+" "+e.getName()+" "
-//                + e.getGender()
-//                + " "
+        Employee e;
+        e=con.getEmployeeById("EM04");
+        System.out.println(e.getID()+" "+e.getName()+" "
+                + e.getGender()
+                + " "
 //                + e.getDoB()
-//                + " "
-//                + e.getPhoneNumber()
-//                + " "
-//                + " "
-//                + e.getRole()+" "
-//                        + e.getAddress()
-//                        + " "
-//                        +(e.getSalary()/1000000+" "));
-//        }
-        System.out.println(con.getNewId(1));
-        System.out.println(con.getNewId(2));
-        System.out.println(con.getNewId(3));
-        con.updateEmployee(new Employee());
+                + " "
+                + e.getPhoneNumber()
+                + " "
+                + " "
+                + e.getRole()+" "
+                        + e.getAddress()
+                        + " "
+                        +(e.getSalary()/1000000+" ") 
+//                +e.getShortname()
+        );
+        e.setShortname("tao");
+        e.setGender(true);
+        con.updateEmployee(e);
+        e=con.getEmployeeById("EM04");
+        System.out.println(e.getID()+" "+e.getName()+" "
+                + e.getGender()
+                + " "
+                + e.getDoB()
+                + " "
+                + e.getPhoneNumber()
+                + " "
+                + " "
+                + e.getRole()+" "
+                        + e.getAddress()
+                        + " "
+                        +(e.getSalary()/1000000+" ")+ e.getShortname());
+        System.out.println(con.deleteEmployee("EM04"));
+//        System.out.println(con.getNewId(1));
+//        System.out.println(con.getNewId(2));
+//        System.out.println(con.getNewId(3));
     }
 }

@@ -6,7 +6,10 @@
 package Model;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.sql.Date;
+import java.text.ParseException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -58,6 +61,16 @@ public class Employee extends People {
     public void setDob(Date Dob) {
         this.Dob = Dob;
     }
+    public void setDob(String dob) {
+        java.util.Date date;
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            date = df.parse(dob);
+            this.Dob = new Date(date.getTime());
+        } catch (ParseException ex) {
+            Logger.getLogger(Employee.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     public String getManager() {
         return manager;
@@ -81,6 +94,9 @@ public class Employee extends People {
 
     public void setSalary(double salary) {
         this.salary = salary;
+    }
+    public void setSalary(String salary) {
+        this.salary = 1000000*Double.parseDouble(salary.split(" ")[0].trim());
     }
     
     

@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Admin Dashboard</title>
 <!--	<link rel="stylesheet" type="text/css" href="css/style.css">-->
@@ -68,7 +67,7 @@
 					</a>
 				</li>
 				<li>
-                                    <a href="employee.jsp">
+                                    <a href="employee">
 					<span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
 					<span class="title">
 						Employee
@@ -84,7 +83,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+                                    <a href="signin.jsp?logout=out">
 					<span class="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
 					<span class="title">
 						Logout

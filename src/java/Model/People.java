@@ -95,6 +95,12 @@ public class People{
     }
 
     public String getShortname() {
+        if(shortname==null){
+            StringBuffer shortN = new StringBuffer();
+            String[] arr = name.split("\\s++");
+            shortN.append((gender?"Anh ":"Chị ")+arr[arr.length-1]);
+            return shortN.toString();
+        }
         return shortname;
     }
     
