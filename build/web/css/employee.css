@@ -76,6 +76,8 @@ and open the template in the editor.
 }
 .details .rightCard .info .addressBx{
 	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-evenly;
 }
 .details .rightCard .info .header{
 	display: flex;
@@ -177,6 +179,7 @@ form .footer .btnf:hover{
 	box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
 }
 /*---------------------------Style create card-------------------------------*/
+.details .rightCard .newcust,
 .details .rightCard .newemployee{
     overflow: hidden;
     z-index: -1;

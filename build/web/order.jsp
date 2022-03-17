@@ -13,10 +13,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <form action="test" method="post">
-            <div>Username:<input type="text" name="username" required/></div>
-            <div>Password<input type="password" name="password" required/></div>
-            <div><input type="submit" value="Login" /></div>
-        </form>
+        
     </body>
 </html>

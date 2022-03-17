@@ -10,21 +10,24 @@ package Model;
  * @author Admin
  */
 public class Customer extends People{
-    private int AgeRange;
+    private int Age;
     
     public Customer() {
         super();
     }
 
-    public Customer( String ID, String name, int AgeRange,boolean gender, String address, String phoneNumber, String account) {
+    public Customer( String ID, String name, int Age,boolean gender, String address, String phoneNumber, String account) {
         super(ID, name, gender, address, phoneNumber, account);
-        this.AgeRange = AgeRange;
+        this.Age = Age;
+    }
+
+    public int getAge() {
+        return Age;
+    }
+
+    public void setAge(int Age) {
+        this.Age = Age;
     }
     
-    public int getAgeRange() {
-        return AgeRange;
-    }
-    public void setAgeRange(int AgeRange) {
-        this.AgeRange = AgeRange;
-    }
+    
 }

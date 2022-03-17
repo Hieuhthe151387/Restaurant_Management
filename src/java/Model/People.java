@@ -75,7 +75,7 @@ public class People{
     }
 
     public String getPhoneNumber() {
-        return phoneNumber;
+        return phoneNumber!=null?phoneNumber:"Không có số";
     }
 
     public void setPhoneNumber(String phoneNumber) {

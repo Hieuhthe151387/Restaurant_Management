@@ -1,18 +1,17 @@
 <%-- 
-    Document   : order
-    Created on : 15-Mar-2022, 16:16:11
+    Document   : menu
+    Created on : 17-Mar-2022, 19:29:19
     Author     : Admin
 --%>
 
-<%@page import="Model.Employee"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="UTF-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
     </head>
     <body>
-        
+        <h1>Hello World!</h1>
     </body>
 </html>

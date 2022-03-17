@@ -6,6 +6,7 @@
 package DAO;
 
 import Model.Account;
+import Model.Customer;
 import Model.Employee;
 import java.sql.Connection;
 import java.sql.Date;
@@ -208,45 +209,137 @@ public class DBconnect {
         }
         return 0;
     }
-}
-class demo {
-    public static void main(String[] args) {
-        DBconnect con = new DBconnect();
-        Employee e;
-        e=con.getEmployeeById("EM04");
-        System.out.println(e.getID()+" "+e.getName()+" "
-                + e.getGender()
-                + " "
-//                + e.getDoB()
-                + " "
-                + e.getPhoneNumber()
-                + " "
-                + " "
-                + e.getRole()+" "
-                        + e.getAddress()
-                        + " "
-                        +(e.getSalary()/1000000+" ") 
-//                +e.getShortname()
-        );
-        e.setShortname("tao");
-        e.setGender(true);
-        con.updateEmployee(e);
-        e=con.getEmployeeById("EM04");
-        System.out.println(e.getID()+" "+e.getName()+" "
-                + e.getGender()
-                + " "
-                + e.getDoB()
-                + " "
-                + e.getPhoneNumber()
-                + " "
-                + " "
-                + e.getRole()+" "
-                        + e.getAddress()
-                        + " "
-                        +(e.getSalary()/1000000+" ")+ e.getShortname());
-        System.out.println(con.deleteEmployee("EM04"));
-//        System.out.println(con.getNewId(1));
-//        System.out.println(con.getNewId(2));
-//        System.out.println(con.getNewId(3));
+//    CRUD for Customer
+    public ArrayList<Customer> getListCustomer(){
+        ArrayList<Customer> list = new ArrayList<Customer>();
+        String sql = "SELECT * FROM CustomersTB WHERE CustID<>'CS01';";
+        try {
+            PreparedStatement statement = con.prepareStatement(sql);
+            ResultSet rs = statement.executeQuery();
+            while(rs.next()){
+                Customer cust = new Customer();
+                cust.setID(rs.getString("CustID"));
+                cust.setName(rs.getString("CustName"));
+                cust.setAge(rs.getInt("Age"));
+                cust.setGender(rs.getBoolean("Gender"));
+                cust.setAddress(rs.getString("Address"));
+                cust.setAccount(rs.getString("Account"));
+                list.add(cust);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public Customer getCustomerById(String id){
+        String sql = "SELECT * FROM CustomersTB WHERE CustID=?;";
+        Customer cust = new Customer();
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1, id);
+            ResultSet rs = state.executeQuery();
+            if(rs.next()){
+                cust.setID(rs.getString("CustID"));
+                cust.setName(rs.getString("CustName"));
+                cust.setAge(rs.getInt("Age"));
+                cust.setGender(rs.getBoolean("Gender"));
+                cust.setAddress(rs.getString("Address"));
+                cust.setAccount(rs.getString("Account"));
+                cust.setShortname(rs.getString("Shortname"));
+                cust.setPhoneNumber(rs.getString("Phonenum"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return cust;
+    }
+    public void createCust(Customer c){
+        String sql = "INSERT INTO CustomersTB(CustID,CustName,Age,Gender,[Address],Account,Shortname,Phonenum)" +
+"VALUES (?,?,?,?,?,?,?,?);";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1,c.getID());
+            state.setString(2,c.getName());
+            state.setInt(3, c.getAge());
+            state.setBoolean(4, c.isGender());
+            state.setString(5,c.getAddress());
+            state.setString(6, c.getAccount());
+            state.setString(7, c.getShortname());
+            state.setString(8,c.getPhoneNumber());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    public void updateCust(Customer c){
+        String sql = "UPDATE CustomersTB SET CustName = ?, Age=?, Gender =?, [Address] = ?, Shortname =?, Phonenum = ? WHERE CustID =?";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1,c.getName());
+            state.setInt(2, c.getAge());
+            state.setBoolean(3, c.isGender());
+            state.setString(4,c.getAddress());
+//            state.setString(5, c.getAccount());
+            state.setString(5, c.getShortname());
+            state.setString(6,c.getPhoneNumber());
+            state.setString(7,c.getID());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void deleteCust(String id){
+        String sql = "DELETE FROM CustomersTB WHERE CustID = ?";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1, id);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }
 }
+//    class demo {
+//    public static void main(String[] args) {
+//        DBconnect con = new DBconnect();
+//        ArrayList<Customer> list = con.getListCustomer();
+//        for(Customer c:list){
+//            System.out.println(c.getID()+" ");
+//        }
+//        Customer c = new Customer();
+//            c.setID("CS03");
+//            c.setName("Chu Văn Vinh");
+//            c.setAge(30);
+//            c.setGender(true);
+//            c.setAddress("Trạch Xá, Hoà Lâm, Ứng Hoà, Hà Nội");
+//            c.setShortname("Vinh Trạch Xá");
+//            c.setPhoneNumber("0876954911");
+//        con.createCust(c);
+//        Customer cust = con.getCustomerById("CS03");
+//            System.out.println(cust.getID()+" "+cust.getName()+""
+//                    +cust.getAge()+""
+//                            + cust.getGender()+""
+//                                    + cust.getShortname()+""
+//                                            + cust.getPhoneNumber()
+//                                            + cust.getAddress(0)+""
+//                                                    + cust.getAccount());
+//            cust.setName("Chu Văn Vinh");
+//            cust.setAge(31);
+//            cust.setGender(true);
+//            cust.setAddress("Trạch Bái, Hoà Lâm, Ứng Hoà, Hà Nội");
+//            cust.setShortname("Vinh Xá");
+//            cust.setPhoneNumber("0978654911");
+//            con.updateCust(cust);
+//            cust = con.getCustomerById("CS03");
+//            System.out.println(cust.getID()+" "+cust.getName()+""
+//                    +cust.getAge()+""
+//                            + cust.getGender()+""
+//                                    + cust.getShortname()+""
+//                                            + cust.getPhoneNumber()
+//                                            + cust.getAddress(0)+""
+//                                                    + cust.getAccount());
+//            con.deleteCust("CS03");
+//    }
+//}
