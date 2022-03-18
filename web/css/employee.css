@@ -127,6 +127,8 @@ and open the template in the editor.
 		padding: 5px;
 		opacity: 0.3;
 }
+
+.details .rightCard .info .inputBx input[type="number"],
 .details .rightCard .info .inputBx input[type="text"],
 .details .rightCard .info .inputBx input[type="date"]{
    		width: 100%;

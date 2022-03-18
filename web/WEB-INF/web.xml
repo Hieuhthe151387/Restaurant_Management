@@ -16,6 +16,10 @@
         <servlet-name>customer</servlet-name>
         <servlet-class>Control.customer</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>menu</servlet-name>
+        <servlet-class>Control.menu</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>server1</servlet-name>
         <url-pattern>/login</url-pattern>
@@ -33,7 +37,10 @@
     <servlet-mapping>
         <servlet-name>customer</servlet-name>
         <url-pattern>/customer</url-pattern>
-        <url-pattern>/test</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>menu</servlet-name>
+        <url-pattern>/menu</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

@@ -1,0 +1,449 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: cursive,sans-serif ;
+}
+body{
+	overflow-x: hidden;
+}
+.container{
+	position: relative;
+	width: 100%;
+}
+.navigation{
+	position: fixed;
+	width: 300px;
+	height: 100%;
+	background: #003147;
+	transition: 0.5s;
+	overflow: hidden;
+}
+/*change width of active navigation*/
+.navigation.active{
+	width: 60px;
+}
+.navigation ul{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+}
+.navigation ul li {
+	position: relative;
+	width: 100%;
+	list-style: none;
+}
+.navigation ul li:nth-child(1) .fa{
+	margin-bottom:30px ;
+}
+.navigation ul li:last-child{
+	margin-top: 30px;
+}
+.navigation ul li:hover{
+	background: #03a94f;
+}
+/*reset hover effect to logo span which is first child of class navigation*/
+.navigation ul li:nth-child(1):hover{
+	background: transparent;/*ke thua lai thuoc tinh cua class cha*/
+}
+
+.navigation ul li a{
+	position: relative;
+	display: block;
+	width: 100%;
+	display: flex;
+	text-decoration: none;
+	color: #fff;
+}
+
+.navigation ul li a .icon
+{
+	position: relative;
+	display: block;
+	min-width: 60px;
+	min-height: 60px;
+	line-height: 50px;
+	margin-top: 6px;
+	text-align: center;
+}
+
+.navigation ul li a .icon .fa 
+{
+	color: #fff;
+	font-size: 30px;
+}
+
+.navigation ul li a .title
+{
+	position: relative;
+	display: block;
+	height: 60px;
+	padding: 0 10px;
+	line-height: 60px;
+	white-space: nowrap;
+}
+.main
+{
+	position: absolute;
+	width: calc(100% - 300px);
+	left: 300px;
+	height: 100vh;
+	background: #f5f5f5;
+	overflow: scroll;
+	transition: 0.5s;
+}
+/*change width of active main*/
+.main.active{
+	width: calc(100% - 60px);
+	left: 60px;
+}
+.main .topbar {
+	width: 100%;
+	background: #fff;
+	height: 60px;
+	padding: 0 10px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+.toggle
+{
+	position: relative;
+	width: 60px;
+	height: 60px;
+	cursor: pointer;
+}
+.toggle:before
+{
+	content: '\2261';
+	font-family: sans-serif;
+	position: absolute;
+	font-size: 47px;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: #111;
+}
+
+/*style search bar*/
+.search
+{
+	position: relative;
+	width: 400px;
+	margin: 10px 0;
+}
+.search label
+{
+	position: relative;
+	width: 100%;
+}
+.search label input{
+	width: 100%;
+	height: 40px;
+	border-radius: 20px;
+	padding: 5px 10px;
+	padding-left: 35px;
+	outline: none;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+}
+.search label .fa{
+	position: absolute;
+	left: 15px;
+	top: 0;
+}
+
+/*Style for user */
+.user{
+	position: relative;
+	width: 50px;
+	height: 50px;
+	min-width: 50px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+.user img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;/*set width and height of img = father class*/
+	height: 100%;
+	object-fit: cover;
+}
+/* style recent order table */
+
+.details{
+	position: relative;
+	width: 100%;
+	padding: 20px;
+	display: grid;
+	grid-gap: 20px;
+	grid-template-columns: 2fr 1fr;
+}
+.details .menu{
+	position: relative;
+	/*display: grid;*/
+	min-height: 530px;
+	background: #fff;
+	border-radius: 8px;
+	padding: 20px;
+}
+
+.tag .cardHeader,
+.details .menuHeader{
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tag h2,
+.menuHeader h2{
+	font-weight: 600;
+}
+
+/*Style table*/
+.details table
+{
+	width: 100%;
+	border-collapse: collapse;
+	margin-top: 30px;
+}
+
+.details .menu table thead{
+	position: sticky;
+	top: 0;
+	align-self: start;
+	background: #fff;
+	z-index: 1;
+}
+.details .menu table thead td{
+	font-size: 18px;
+	font-weight: 600;
+}
+
+.details .menu table tr,
+.details .menu table thead{
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.details .menu table tr:last-child{
+	border-bottom: none;
+}
+.details .menu table tr:hover,
+.details .menu .create:hover
+{
+	background: #03a9f4;
+	color: #fff;
+}
+.details .menu table tr td{
+	padding: 9px 5px;
+	text-align: center;
+}
+
+.details .menu table tr td:last-child{
+	text-align: right;
+}
+
+.details .menu table tr td:nth-child(3){
+	text-align: left;
+}
+.details .menu table tr td:nth-child(2){
+	position: relative;
+	width: 120px;
+}
+
+.details .menu table tr td .imageBx{
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,0%);
+	width: 70px;
+	height: 80px;
+	position: relative;
+}
+.details .menu table tr td .imageBx img{
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.details .menu .create{
+	text-align: center;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-style: dashed;
+	/*background: #1795ce;*/
+}
+
+/* Style card */
+.rightCard
+{
+	position: sticky;
+	top: 0;
+	align-self: start;
+	min-height: 530px;
+	background: #fff;
+	border-radius: 8px;
+	padding: 20px;
+}
+
+.details .rightCard .imgBx {
+	position: relative;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	overflow: hidden;
+}
+
+.details .rightCard .imgBx img{
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+.details .rightCard table tr{
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+.details .rightCard table tr td:first-child{
+	width: 60px;
+}
+.details .rightCard table tr td span{
+	font-size: 14;
+	color: #999;
+}
+.details .rightCard table tr:hover,
+.details .rightCard table tr:hover td span{
+	color: #fff;
+	background: #03a94f;
+}
+.details .rightCard table tr td{
+	padding: 7px 10px;
+}
+.details .rightCard table tr td h4{
+	font-size: 16px;
+	font-weight: 500;
+	line-height: 1.2em;
+}
+/* Style create form */
+
+.tag {
+	position: absolute;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%,0%);
+	border-radius: 8px;
+	padding: 5px 50px;
+	background: white;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	overflow: hidden;
+	z-index: 2;
+	transition: 1s;
+}
+
+.tag .cardHeader .close{
+	width: 33px;
+	height: 33px;
+	padding-top: 6px;
+	text-align: center;
+	border-radius: 50%;
+}
+.tag .cardHeader .close:hover{
+	background: #f00;
+	color: #fff;
+}
+
+.tag .details{
+	display: flex;
+	justify-content: center;
+}
+.tag .inputBx{
+	position: relative;
+	width: 200px;
+	height: 30px;
+	margin-bottom: 25px;
+	padding: 5px;
+}
+
+.tag .inputBx{
+	border-radius: none;
+}
+.tag .inputBx input{
+   		width: 100%;
+   		height: 100%;
+   		border: none;
+   		font-size: 16px;
+   		transition: 1s;
+   		transition-timing-function: ease-in-out;
+   		border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.tag .inputBx input:focus{
+   		outline: none;
+   		border-color: rgba(94, 255, 148, 1.0);
+}
+
+.tag .inputBx span{
+		font-size: 14px;
+		top: -20px;
+		left: 0;
+		padding: 5px;
+}
+
+.tag .inputBx label{
+		position: absolute;
+		right:0;
+		top: 20px;
+		padding: 5px;
+		opacity: 0.3;
+}
+
+.tag .details .footer{
+	display: flex;
+	justify-content: safe flex-end;
+}
+
+.btn{
+	padding: 5px 8px;
+	margin: 20px 5px;
+	border: 1px solid rgba(0, 0, 0, 0.1);
+	border-radius: 5px;
+	cursor: pointer;
+}
+#delete{
+	background: #ff0000b3;
+	color: #fff;
+}
+#delete:hover{
+	color: #ff0000b3;
+	background: #fff;
+	border-color: #f00;
+}
+#cancel{
+	margin: 20px 0 20px 5px;
+}
+#cancel:hover{
+	background: red;
+	color: white;
+}
+#create:hover{
+	background: rgba(94, 255, 148, 1.0);
+	color:#fff;
+}
+#update:hover{
+	background: #c7c138c2;
+	color: #fff;
+}
+
+.main .tag.hidden{
+	display: none;
+}
+.main .tag.createTag{
+	overflow: hidden;
+	padding: 0;
+	height: 0;
+}
+.main .tag.create{
+	padding: 10px 50px;
+	height: 380px;
+}

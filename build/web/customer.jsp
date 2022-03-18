@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div class="container">
-		<div class="navigation">
+		<div class="navigation active">
 			<ul>
 				<li>
 					<a href="home.jsp">
@@ -91,7 +91,7 @@
 				</li>
 			</ul>
 		</div>
-   		<div class="main">
+   		<div class="main active">
    			<div class="topbar">
    				<div class="toggle"onclick="toggleMenu();">
    				</div>
@@ -153,7 +153,7 @@
 						<div class="h2">Chọn một khách hàng để xem chi tiết</div>
 					</div>
 					<div class="session <c:if test="${custview==null}">hidden</c:if>">
-						<form method="post" name="custdetails">
+                                                     <form method="post" action="customer" name="custdetails">
 	<div class="info">
 		<div class="imgBx">
 			<img src="images/user.png" alt="user"/>
@@ -229,7 +229,7 @@
 				<div class="inputBx">
 					<span>Tỉnh, thành phố</span>
 					<input type="text" id="address3" name="address3" readonly value="${custview.getAddress(3)}"/>
-					<label for="address0" id="address3" class="icon">
+					<label for="address3" id="address3" class="icon">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 					</label>
 				</div>
@@ -238,17 +238,17 @@
 	</div>	
 	<div class="footer">
                 <input type="hidden" name="req" id="req" value="u"/>
-                <input type="submit" value="Update" class="btnf" disabled id="update"/>
-                <button class="btnf" id="delete" type="button" onclick="deletecust('${requestScope.id}')">Delete<span class="icon"></span></button>
-                <button class="btnf" id="cancel" type="button" onclick="cancelupdate()" disabled>Cancel<span class="icon"></span></button>
+                <input type="submit" value="Update" class="btnf" disabled id="updatec"/>
+                <button class="btnf" id="delete" type="button" onclick="deletecust('${requestScope.id}')">Delete</button>
+                <button class="btnf" id="cancelc" type="button" onclick="cancelupdate()" disabled>Cancel</button>
 	</div>		
 						</form>
 					</div>
-					<div class="newcust <c:if test="${employeecreate!=null}">create</c:if>">
+					<div class="newcust <c:if test="${newId!=null}">create</c:if>">
 						<header>
 							<h2>Thêm khách hàng</h2>
 						</header>
-						<form name="addcust" method="post">
+                                                <form name="addcust" action="customer" method="post">
 	<div class="info">
 		<div class="imgBx">
 			<img src="images/user.png" alt="user"/>
@@ -278,7 +278,7 @@
 				<input type="text" id="phonenum" name="phonenum" required placeholder="Phone number..." />
 			</div>
 		</div>
-		<div class="session">
+		<!--<div class="session">-->
 			<div class="addressBx">
 				<div class="inputBx">
 					<span>Thôn</span>
@@ -290,19 +290,19 @@
 				</div>
 				<div class="inputBx">
 					<span>Quận,huyện</span>
-					<input type="text" id="address2" ame="naddress2" required placeholder="Quận,huyện"/>
+					<input type="text" id="address2" ame="address2" required placeholder="Quận,huyện"/>
 				</div>
 				<div class="inputBx">
 					<span>Tỉnh, thành phố</span>
 					<input type="text" id="address3" name="address3" required placeholder="tỉnh, thành"/>
 				</div>
 			</div>
-		</div>					
+		<!--</div>-->					
 	</div>
 	<div class="footer">
                 <input type="hidden" name="req" value="s"/>
-		<button class="btnf" id="create" type="submit">Create<span class="icon"></span></button>
-		<button class="btnf" id="cancel" onclick="cancelcreate('addcust')">Cancel<span class="icon"></span></button>
+		<button class="btnf" id="create" type="submit">Create</button>
+		<button class="btnf" id="cancel" onclick="cancelcreate()">Cancel<span class="icon"></span></button>
 	</div>	
 						</form>
 					</div>
@@ -344,8 +344,8 @@
 			empty.classList.toggle('hidden');
 		}
 		// variable of employee page
-		let updatef = document.getElementById('update');
-		let cancelf = document.getElementById('cancel');
+		let updatef = document.getElementById('updatec');
+		let cancelf = document.getElementById('cancelc');
 		let editspan = document.getElementsByClassName('icon');
 		for(let i = 0; i<editspan.length;i++){
 			editspan[i].addEventListener('click',editdata);
@@ -365,7 +365,7 @@
 		};
         
         
-        function deleteem(id){
+        function deletecust(id){
                     if(confirm("Bạn muốn tiếp tục xoá bản ghi này? Thao tác này có thế gây mất dữ liệu!")){
                     let f = document.fcust;
                     f.action="customer?req=r&id="+id;
@@ -373,8 +373,8 @@
                 }
                 };
 	function cancelupdate(){
-            let updatef = document.getElementById('update');
-            let cancelf = document.getElementById('cancel');
+            let updatef = document.getElementById('updatec');
+            let cancelf = document.getElementById('cancelc');
             for(let i = 0; i<remeber.length;i++){
             if(remeber[i].id==='gender'){
 		remeber[i].setAttribute('disabled',true);
@@ -382,12 +382,12 @@
 		remeber[i].setAttribute('readonly',true);
             }	
             }
-            document.employeedetails.reset();
+            document.custdetails.reset();
             updatef.setAttribute('disabled',true);
             cancelf.setAttribute('disabled',true);
 	}
         function cancelcreate(){
-            document.addemployee.reset();
+            document.addcust.reset();
             let createpanel = document.querySelector('.newcust');
             createpanel.classList.toggle('create');
             console.log('canceled create!');

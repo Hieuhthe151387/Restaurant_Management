@@ -62,13 +62,20 @@ public class Product {
     public double getPrice() {
         return price;
     }
-
+    
+    public String getprice(){
+        return price/1000 +"k VNĐ";
+    }
     public void setPrice(double price) {
         this.price = price;
     }
 
     public double getCost() {
         return cost;
+    }
+    
+    public String getcost(){
+        return cost/1000+"k VNĐ";
     }
 
     public void setCost(double cost) {

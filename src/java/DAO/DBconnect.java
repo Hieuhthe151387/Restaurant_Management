@@ -8,6 +8,7 @@ package DAO;
 import Model.Account;
 import Model.Customer;
 import Model.Employee;
+import Model.Product;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -107,6 +108,7 @@ public class DBconnect {
             String query1 = "SELECT MAX(EmployeeId) As LastId FROM EmployeesTB";
             String query2 = "SELECT MAX(product_id) As LastId FROM Product";
             String query3 = "Select MAX(CustID) As LastId from CustomersTB";
+            String query4 = "SELECT MAX(order_id)as LastId  FROM [Order]";
             String query;
             String id=null;
             switch(status){
@@ -115,6 +117,8 @@ public class DBconnect {
                 case 2: query = query2;
                         break;
                 case 3: query = query3;
+                        break;
+                case 4: query = query4;
                         break;
                 default: return null;
             }
@@ -224,6 +228,8 @@ public class DBconnect {
                 cust.setGender(rs.getBoolean("Gender"));
                 cust.setAddress(rs.getString("Address"));
                 cust.setAccount(rs.getString("Account"));
+                cust.setShortname(rs.getString("Shortname"));
+                cust.setPhoneNumber(rs.getString("Phonenum"));
                 list.add(cust);
             }
         } catch (SQLException ex) {
@@ -298,48 +304,103 @@ public class DBconnect {
         } catch (SQLException ex) {
             Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void createProduct(Product p){
+        String query = "INSERT INTO Product VALUES(?,?,?,?,?);";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setString(1,p.getId());
+            state.setString(2, p.getName());
+            state.setDouble(3, p.getPrice());
+            state.setDouble(4, p.getCost());
+            state.setDouble(5, p.getQuantity());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public Product getProductById(String id){
+        Product p = new Product();
+        String sql = "SELECT * FROM Product WHERE product_id = ?";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1, id);
+            ResultSet rs = state.executeQuery();
+            if(rs.next())
+            {
+            p.setId(rs.getString("product_id"));
+            p.setName(rs.getString("productname"));
+            p.setPrice(rs.getDouble("price"));
+            p.setCost(rs.getDouble("cost"));
+            p.setQuantity(rs.getInt("quantity"));
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return p;
+    }
+    
+    public ArrayList<Product> getListProduct(){
+        ArrayList<Product> list = new ArrayList<>();
+        String query = "SELECT * FROM Product";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            ResultSet rs = state.executeQuery();
+            while(rs.next()){
+                Product p = new Product();
+                p.setId(rs.getString("product_id"));
+                p.setName(rs.getString("productname"));
+                p.setPrice(rs.getDouble("price"));
+                p.setCost(rs.getDouble("cost"));
+                p.setQuantity(rs.getInt("quantity"));  
+                list.add(p);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    public void deleteProduct(String id){
+        String query ="DELETE FROM Product WHERE product_id = ?;";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setString(1,id);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateProduct(Product p){
+        String query = "UPDATE Product SET productname = ?,price = ?, cost=?, quantity=? WHERE product_id =?;";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setString(1, p.getName());
+            state.setDouble(2, p.getPrice());
+            state.setDouble(3, p.getCost());
+            state.setInt(4,p.getQuantity());
+            state.setString(5,p.getId());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateProductQuantity(String id,int quan){
+        String query = "UPDATE Product SET quantity = ? WHERE product_id =?;";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setInt(1,quan);
+            state.setString(2,id);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+}
+class demo {  
+    public static void main(String[] args) {
+        DBconnect con = new DBconnect();
         
     }
 }
-//    class demo {
-//    public static void main(String[] args) {
-//        DBconnect con = new DBconnect();
-//        ArrayList<Customer> list = con.getListCustomer();
-//        for(Customer c:list){
-//            System.out.println(c.getID()+" ");
-//        }
-//        Customer c = new Customer();
-//            c.setID("CS03");
-//            c.setName("Chu Văn Vinh");
-//            c.setAge(30);
-//            c.setGender(true);
-//            c.setAddress("Trạch Xá, Hoà Lâm, Ứng Hoà, Hà Nội");
-//            c.setShortname("Vinh Trạch Xá");
-//            c.setPhoneNumber("0876954911");
-//        con.createCust(c);
-//        Customer cust = con.getCustomerById("CS03");
-//            System.out.println(cust.getID()+" "+cust.getName()+""
-//                    +cust.getAge()+""
-//                            + cust.getGender()+""
-//                                    + cust.getShortname()+""
-//                                            + cust.getPhoneNumber()
-//                                            + cust.getAddress(0)+""
-//                                                    + cust.getAccount());
-//            cust.setName("Chu Văn Vinh");
-//            cust.setAge(31);
-//            cust.setGender(true);
-//            cust.setAddress("Trạch Bái, Hoà Lâm, Ứng Hoà, Hà Nội");
-//            cust.setShortname("Vinh Xá");
-//            cust.setPhoneNumber("0978654911");
-//            con.updateCust(cust);
-//            cust = con.getCustomerById("CS03");
-//            System.out.println(cust.getID()+" "+cust.getName()+""
-//                    +cust.getAge()+""
-//                            + cust.getGender()+""
-//                                    + cust.getShortname()+""
-//                                            + cust.getPhoneNumber()
-//                                            + cust.getAddress(0)+""
-//                                                    + cust.getAccount());
-//            con.deleteCust("CS03");
-//    }
-//}

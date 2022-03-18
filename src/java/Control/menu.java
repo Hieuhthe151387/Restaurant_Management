@@ -6,13 +6,10 @@
 package Control;
 
 import DAO.DBconnect;
-import Model.Customer;
+import Model.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -22,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class customer extends HttpServlet {
+public class menu extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -36,18 +33,16 @@ public class customer extends HttpServlet {
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Customer</title>");            
+            out.println("<title>Servlet menu</title>");            
             out.println("</head>");
             out.println("<body>");
-//            out.println("This record had been "+((Customer)request.getAttribute("message")).getAddress());
             out.println("This record had been "+request.getAttribute("message"));
-            out.println("<a href=\"customer\">Go back</a>");
+            out.println("<a href=\"menu\">Go back</a>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,10 +61,10 @@ public class customer extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
-        request.getSession().removeAttribute("listcust");
-        ArrayList<Customer> list = new DBconnect().getListCustomer();
-        request.getSession().setAttribute("listcust", list);
-        request.getRequestDispatcher("customer.jsp").forward(request, response);
+        request.getSession().removeAttribute("listproduct");
+        ArrayList<Product> list = new DBconnect().getListProduct();
+        request.getSession().setAttribute("listproduct", list);
+        request.getRequestDispatcher("menu.jsp").forward(request, response);
     }
 
     /**
@@ -80,26 +75,18 @@ public class customer extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    private Customer parseCust(HttpServletRequest request){
-           Customer c = new Customer();
-        try {
-            request.setCharacterEncoding("UTF-8");
-        } catch (UnsupportedEncodingException ex) {
-            Logger.getLogger(customer.class.getName()).log(Level.SEVERE, null, ex);
-        }
-            c.setID(request.getParameter("id"));
-            c.setName(request.getParameter("name"));
-            c.setAge(Integer.parseInt(request.getParameter("age")));
-            c.setGender(request.getParameter("gender").equals("male"));
-            c.setShortname(request.getParameter("sname"));
-            c.setPhoneNumber(request.getParameter("phonenum"));
-            String a0 = request.getParameter("address0");
-            String a1 = request.getParameter("address1");
-            String a2 = request.getParameter("address2");
-            String a3 = request.getParameter("address3");
-            c.setAddress(a0+", "+a1+", "+a2+", "+a3);
-            return c;
+
+    private Product parseProduct(HttpServletRequest request){
+           Product p = new Product();
+            p.setId(request.getParameter("id"));
+            p.setName(request.getParameter("name"));
+            p.setPrice(Double.parseDouble(request.getParameter("price")));
+            p.setCost(Double.parseDouble(request.getParameter("cost")));
+            p.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+            return p;
     }
+    
+    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -107,40 +94,43 @@ public class customer extends HttpServlet {
         request.setCharacterEncoding("UTF-8");
         String req = request.getParameter("req");
         DBconnect db = new DBconnect();
-        Customer cust = new Customer();
+        Product p = new Product();
         String id="",newid;
         if(req.equals("v")||req.equals("r")) {id=request.getParameter("id");}
+        
+        
+       
         switch(req){
-            case "v": cust = db.getCustomerById(id);
-                      request.setAttribute("id", id);
-                      request.setAttribute("custview", cust);
+            case "v": p = db.getProductById(id);
+                      request.setAttribute("viewid", id);
+                      request.setAttribute("productview", p);
                 break;
-            case "u": cust = parseCust(request);
-                      db.updateCust(cust);
+           case "u": p = parseProduct(request);
+                      db.updateProduct(p);
                       request.setAttribute("message", "updated");
 //                      response.sendRedirect("customer");
                       processRequest(request, response);
                 break;
 //                remove an cust 
-            case "r":db.deleteCust(id);
+            case "r":db.deleteProduct(id);
                     request.setAttribute("message", "removed");
                 break;
 //            request create new cust
-            case "c": newid = db.getNewId(3);
+            case "c": newid = db.getNewId(2);
                       request.setAttribute("newId",newid);
                 break;
 //            request submit info of new cust had been create
-            case "s": cust = parseCust(request);
-                      db.createCust(cust);
-                      request.setAttribute("message", "created");
+             case "s":p = parseProduct(request);
+                      db.createProduct(p);
+                      request.setAttribute("message","create");
                 break;
             default: break;
         }
         if(req.equals("v")||req.equals("c")){
-        request.getRequestDispatcher("/customer.jsp").forward(request, response);
+        request.getRequestDispatcher("/menu.jsp").forward(request, response);
         }
         else processRequest(request, response);
-        
+ /*        */
     }
 
     /**
