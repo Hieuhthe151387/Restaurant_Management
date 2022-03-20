@@ -96,6 +96,7 @@ public class customer extends HttpServlet {
             String a0 = request.getParameter("address0");
             String a1 = request.getParameter("address1");
             String a2 = request.getParameter("address2");
+            if (a2==null) {a2="H ";}
             String a3 = request.getParameter("address3");
             c.setAddress(a0+", "+a1+", "+a2+", "+a3);
             return c;
@@ -130,7 +131,8 @@ public class customer extends HttpServlet {
                       request.setAttribute("newId",newid);
                 break;
 //            request submit info of new cust had been create
-            case "s": cust = parseCust(request);
+            case "s": 
+                      cust=parseCust(request);
                       db.createCust(cust);
                       request.setAttribute("message", "created");
                 break;

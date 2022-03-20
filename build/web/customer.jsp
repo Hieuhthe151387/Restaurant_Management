@@ -256,7 +256,7 @@
 		<div class="header">
 			<div class="inputBx short">
 				<span>Id:</span>
-				<input type="text" name=id" readonly value="${newId}"/>
+				<input type="text" name="id" readonly value="${newId}"/>
 			</div>
 			<div class="inputBx">
 				<span>Họ và tên:</span>
@@ -290,7 +290,7 @@
 				</div>
 				<div class="inputBx">
 					<span>Quận,huyện</span>
-					<input type="text" id="address2" ame="address2" required placeholder="Quận,huyện"/>
+					<input type="text" id="address2" name="address2" required placeholder="Quận,huyện"/>
 				</div>
 				<div class="inputBx">
 					<span>Tỉnh, thành phố</span>

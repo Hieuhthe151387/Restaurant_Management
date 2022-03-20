@@ -149,6 +149,7 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t</li>\n");
       out.write("\t\t\t</ul>\n");
       out.write("\t\t</div>\n");
+      out.write("            <form name=\"formfood\" hidden></form>\n");
       out.write("   \t\t<div class=\"main\">\n");
       out.write("   \t\t\t<div class=\"topbar\">\n");
       out.write("   \t\t\t\t<div class=\"toggle\"onclick=\"toggleMenu();\">\n");
@@ -204,7 +205,9 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t\t\t</tbody>\n");
       out.write("\t\t\t\t\t</table>\n");
       out.write("\t\t\t\t</div>\n");
-      out.write("                            <div class=\"tag createTag create ");
+      out.write("                            <div class=\"tag createTag ");
+      if (_jspx_meth_c_if_1(_jspx_page_context))
+        return;
       out.write("\">\n");
       out.write("\t\t\t\t<div class=\"cardHeader\">\n");
       out.write("\t\t\t\t\t<h2>Add new food</h2>\n");
@@ -242,7 +245,7 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t\t</div>\n");
       out.write("   \t\t\t</div>\n");
       out.write("                            <div class=\"tag update updateTag ");
-      if (_jspx_meth_c_if_1(_jspx_page_context))
+      if (_jspx_meth_c_if_2(_jspx_page_context))
         return;
       out.write("\">\n");
       out.write("\t\t\t\t<div class=\"cardHeader\">\n");
@@ -306,7 +309,7 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t\t</div>\n");
       out.write("\t\t</div>\n");
       out.write("\t</div>\n");
-      out.write("<form name=\"formfood\" action=\"\" hidden></form>\n");
+      out.write("\n");
       out.write("\t<script>\n");
       out.write("\t\tfunction toggleMenu(){\n");
       out.write("\t\t\tlet toggle = document.querySelector('.toggle');\n");
@@ -323,7 +326,7 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       out.write("\t\t}\n");
       out.write("\t\tfunction viewdetail(){\n");
       out.write("\t\t\tcloseCard();\n");
-      out.write("                        console.log(\"non direct!\");\n");
+      out.write("                        console.log(\"non direct!\"+this.id);\n");
       out.write("\t\t\tlet foodform = document.formfood;\n");
       out.write("\t\t\tfoodform.action=\"menu?req=v&id=\"+this.id;\n");
       out.write("                        foodform.submit();\n");
@@ -589,11 +592,11 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
     org.apache.taglibs.standard.tag.rt.core.IfTag _jspx_th_c_if_1 = (org.apache.taglibs.standard.tag.rt.core.IfTag) _jspx_tagPool_c_if_test.get(org.apache.taglibs.standard.tag.rt.core.IfTag.class);
     _jspx_th_c_if_1.setPageContext(_jspx_page_context);
     _jspx_th_c_if_1.setParent(null);
-    _jspx_th_c_if_1.setTest(((java.lang.Boolean) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${foodview==null}", java.lang.Boolean.class, (PageContext)_jspx_page_context, null)).booleanValue());
+    _jspx_th_c_if_1.setTest(((java.lang.Boolean) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${newId!=null}", java.lang.Boolean.class, (PageContext)_jspx_page_context, null)).booleanValue());
     int _jspx_eval_c_if_1 = _jspx_th_c_if_1.doStartTag();
     if (_jspx_eval_c_if_1 != javax.servlet.jsp.tagext.Tag.SKIP_BODY) {
       do {
-        out.write("hidden");
+        out.write("create");
         int evalDoAfterBody = _jspx_th_c_if_1.doAfterBody();
         if (evalDoAfterBody != javax.servlet.jsp.tagext.BodyTag.EVAL_BODY_AGAIN)
           break;
@@ -604,6 +607,32 @@ public final class menu_jsp extends org.apache.jasper.runtime.HttpJspBase
       return true;
     }
     _jspx_tagPool_c_if_test.reuse(_jspx_th_c_if_1);
+    return false;
+  }
+
+  private boolean _jspx_meth_c_if_2(PageContext _jspx_page_context)
+          throws Throwable {
+    PageContext pageContext = _jspx_page_context;
+    JspWriter out = _jspx_page_context.getOut();
+    //  c:if
+    org.apache.taglibs.standard.tag.rt.core.IfTag _jspx_th_c_if_2 = (org.apache.taglibs.standard.tag.rt.core.IfTag) _jspx_tagPool_c_if_test.get(org.apache.taglibs.standard.tag.rt.core.IfTag.class);
+    _jspx_th_c_if_2.setPageContext(_jspx_page_context);
+    _jspx_th_c_if_2.setParent(null);
+    _jspx_th_c_if_2.setTest(((java.lang.Boolean) org.apache.jasper.runtime.PageContextImpl.evaluateExpression("${foodview==null}", java.lang.Boolean.class, (PageContext)_jspx_page_context, null)).booleanValue());
+    int _jspx_eval_c_if_2 = _jspx_th_c_if_2.doStartTag();
+    if (_jspx_eval_c_if_2 != javax.servlet.jsp.tagext.Tag.SKIP_BODY) {
+      do {
+        out.write("hidden");
+        int evalDoAfterBody = _jspx_th_c_if_2.doAfterBody();
+        if (evalDoAfterBody != javax.servlet.jsp.tagext.BodyTag.EVAL_BODY_AGAIN)
+          break;
+      } while (true);
+    }
+    if (_jspx_th_c_if_2.doEndTag() == javax.servlet.jsp.tagext.Tag.SKIP_PAGE) {
+      _jspx_tagPool_c_if_test.reuse(_jspx_th_c_if_2);
+      return true;
+    }
+    _jspx_tagPool_c_if_test.reuse(_jspx_th_c_if_2);
     return false;
   }
 }

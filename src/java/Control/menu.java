@@ -80,9 +80,9 @@ public class menu extends HttpServlet {
            Product p = new Product();
             p.setId(request.getParameter("id"));
             p.setName(request.getParameter("name"));
-            p.setPrice(Double.parseDouble(request.getParameter("price")));
-            p.setCost(Double.parseDouble(request.getParameter("cost")));
-            p.setQuantity(Integer.parseInt(request.getParameter("quantity")));
+            p.setPrice(request.getParameter("price"));
+            p.setCost(request.getParameter("cost"));
+            p.setQuantity(Integer.parseInt(request.getParameter("quan")));
             return p;
     }
     
@@ -98,8 +98,6 @@ public class menu extends HttpServlet {
         String id="",newid;
         if(req.equals("v")||req.equals("r")) {id=request.getParameter("id");}
         
-        
-       
         switch(req){
             case "v": p = db.getProductById(id);
                       request.setAttribute("viewid", id);

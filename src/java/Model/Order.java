@@ -6,7 +6,7 @@
 package Model;
 
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 
 
 
@@ -22,7 +22,8 @@ public class Order {
     private String emid;
     private double total;
     private double benefit;
-    private int status; 
+    private int status;
+    private int type;
     public Order() {
         orderdetail=new ArrayList<>();
     }
@@ -34,6 +35,20 @@ public class Order {
         this.custid = custid;
         this.emid = emid;
     }
+
+    public Order(String id, Date date, ArrayList<Product> orderdetail, String custid, String emid, int status, int type) {
+        this.id = id;
+        this.date = date;
+        this.orderdetail = orderdetail;
+        this.custid = custid;
+        this.emid = emid;
+        this.total = total;
+        this.benefit = benefit;
+        this.status = status;
+        this.type = type;
+    }
+    
+    
 
     public String getId() {
         return id;
@@ -75,17 +90,20 @@ public class Order {
         this.status = status;
     }
 
-    public double getBenefit() {
-        return benefit;
+    public int getType() {
+        return type;
     }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    
 
     public void setBenefit(double benefit) {
         this.benefit = benefit;
     }
 
-    public double getTotal() {
-        return total;
-    }
 
     public void setTotal(double total) {
         this.total = total;
@@ -127,10 +145,18 @@ public class Order {
         if(getProduct(id)!=null) orderdetail.remove(getProduct(id));
     }
     
-    public double gettotal(){
+    public double getTotal(){
         double t=0;
         for(Product p: orderdetail){
             t += p.getPrice()*p.getQuantity();
+        }
+        total = t;
+        return t;
+    }
+    public double getBenefit(){
+        double t=0;
+        for(Product p: orderdetail){
+            t += (p.getPrice()-p.getCost())*p.getQuantity();
         }
         total = t;
         return t;

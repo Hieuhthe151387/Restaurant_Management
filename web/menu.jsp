@@ -14,7 +14,7 @@
 	<title>Admin Dashboard</title>
 	<link rel="stylesheet" type="text/css" href="css/menu.css">
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <c:set value="${requestScope.foodview}" scope="request" var="foodview"/>
+        <c:set value="${requestScope.productview}" scope="request" var="productview"/>
         <c:set value="${sessionScope.listproduct}" scope="session" var="listproduct"/>
         <c:set value="${sessionScope.asidelist}" scope="request" var="asidelist"/>
         <c:set value="${newId}" scope="request" var="newId"/>
@@ -82,6 +82,7 @@
 				</li>
 			</ul>
 		</div>
+            <form name="formfood" method="post" hidden></form>
    		<div class="main">
    			<div class="topbar">
    				<div class="toggle"onclick="toggleMenu();">
@@ -158,7 +159,7 @@
 						</tbody>
 					</table>
 				</div>
-                            <div class="tag createTag create <%--<c:if test="${newId!=null}">create</c:if>--%>">
+                            <div class="tag createTag <c:if test="${newId!=null}">create</c:if>">
 				<div class="cardHeader">
 					<h2>Add new food</h2>
 				</div>
@@ -182,7 +183,7 @@
 						</div>
 						<div class="inputBx">
 							<span class="title">Quantity</span>
-							<input type="number" name="quantity" id="quantity" required/>
+							<input type="number" name="quan" id="quan" required/>
 						</div>
 						<div class="footer">
                                                     <input type="hidden" name="req" value="s"/>
@@ -192,7 +193,7 @@
 					</form>
 				</div>
    			</div>
-                            <div class="tag update updateTag <c:if test="${foodview==null}">hidden</c:if>">
+                            <div class="tag update updateTag <c:if test="${productview==null}">hidden</c:if>">
 				<div class="cardHeader">
 					<h2>Food infomation</h2>
 					<span class="close" onclick="closeCard()">X</span>
@@ -201,40 +202,40 @@
                                     <form name="foodedit" action="menu" method="post">
 						<div class="inputBx">
 							<span class="title">ID</span>
-							<input type="text" name="id" id="eid" value="${foodview.id}" readonly/>
+							<input type="text" name="id" id="eid" value="${productview.id}" readonly/>
 						</div>
 						<div class="inputBx">
 							<span class="title">Name</span>
-							<input type="text" name="name" id="ename" value="${foodview.name}" readonly />
+							<input type="text" name="name" id="ename" value="${productview.name}" readonly />
 							<label for="price" id="ename" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>
 						<div class="inputBx">
 							<span class="title">Price</span>
-							<input type="text" name="price" id="eprice" value="${foodview.getprice()}"  readonly />
+							<input type="text" name="price" id="eprice" value="${productview.getprice()}"  readonly />
 							<label for="price" id="eprice" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>
 						<div class="inputBx">
 							<span class="title">Cost</span>
-							<input type="text" name="cost" id="ecost" value="${foodview.getcost()}" readonly />
+							<input type="text" name="cost" id="ecost" value="${productview.getcost()}" readonly />
 							<label for="cost" id="ecost" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>
                                                 <div class="inputBx">
 							<span class="title">Quantity</span>
-							<input type="number" name="quan" id="ecost" value="${foodview.quantity}" readonly />
-							<label for="cost" id="ecost" class="icon">
+							<input type="number" name="quan" id="equan" value="${productview.quantity}" readonly />
+							<label for="cost" id="equan" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>        
 						<div class="footer">
                                                     <input type="hidden" name="req" value="u"/>
 <button class="btn" id="updatef" disabled>Update</button>
-<button class="btn" id="deletef" type="button" onclick="delfood('${requestScope.viewId}')" >Delete</button>
+<button class="btn" id="deletef" type="button" onclick="delfood('${requestScope.viewid}')" >Delete</button>
 <button class="btn" id="cancelf" type="button" onclick="cancelupdate()" disabled>Cancel</button>
 						</div>
 					</form>
@@ -242,7 +243,7 @@
 			</div>
 		</div>
 	</div>
-<form name="formfood" action="" hidden></form>
+
 	<script>
 		function toggleMenu(){
 			let toggle = document.querySelector('.toggle');
@@ -258,8 +259,8 @@
 			viewdata[i].addEventListener('click',viewdetail);
 		}
 		function viewdetail(){
-			closeCard();
-                        console.log("non direct!");
+//			closeCard();
+                        console.log("non direct!"+this.id);
 			let foodform = document.formfood;
 			foodform.action="menu?req=v&id="+this.id;
                         foodform.submit();

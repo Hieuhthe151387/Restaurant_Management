@@ -69,6 +69,14 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
+    
+    public void setPrice(String price) {
+        if(price.matches("\\d+")){
+            this.price = Double.parseDouble(price) * 1000;
+        } else {
+            this.price = Double.parseDouble(price.toLowerCase().trim().split("k")[0])*1000;
+        }
+    }
 
     public double getCost() {
         return cost;
@@ -77,9 +85,15 @@ public class Product {
     public String getcost(){
         return cost/1000+"k VNĐ";
     }
-
+    
     public void setCost(double cost) {
         this.cost = cost;
     }
-    
+    public void setCost(String cost){
+        if(cost.matches("\\d+")){
+            this.cost = Double.parseDouble(cost) * 1000;
+        } else {
+            this.cost = Double.parseDouble(cost.toLowerCase().trim().split("k")[0])*1000;
+        }
+    }
 }

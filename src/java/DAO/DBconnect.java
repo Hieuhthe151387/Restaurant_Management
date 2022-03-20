@@ -398,9 +398,9 @@ public class DBconnect {
         }
     }
 }
-class demo {  
-    public static void main(String[] args) {
-        DBconnect con = new DBconnect();
-        
-    }
-}
+//class demo {  
+//    public static void main(String[] args) {
+//        DBconnect con = new DBconnect();
+//        
+//    }
+//}
