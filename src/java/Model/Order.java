@@ -42,14 +42,41 @@ public class Order {
         this.orderdetail = orderdetail;
         this.custid = custid;
         this.emid = emid;
-        this.total = total;
-        this.benefit = benefit;
         this.status = status;
         this.type = type;
     }
+    public String gettype(){
+        return type==0?"Tại quán":"Ship";
+    }
+    public String getstatus(){
+        switch(status){
+            case 0: return "Chưa nhận";
+            case 1: return "Đang xử lý";
+            case 2: return type==1?"Đang giao":"Hoàn thành";
+            case 3: return "Thanh toán";
+            case 4: return "Huỷ đơn";
+            default: return "";
+        }
+    }
+    public String getClassStatus(){
+        switch(status){
+            case 0: return "pending";
+            case 1: return "inprogress";
+            case 2: return "complety";
+            case 3: return "inprogress";
+            case 4: return "cancel";
+            default: return "";
+        }
+    }
+    public String getCustName(){
+        DAO.DBconnect db = new DAO.DBconnect();
+        return db.getCustName(custid);
+    }
+    public String getEmName(){
+        DAO.DBconnect db = new DAO.DBconnect();
+        return db.getEmployeeName(emid);
+    }
     
-    
-
     public String getId() {
         return id;
     }
@@ -146,6 +173,7 @@ public class Order {
     }
     
     public double getTotal(){
+        if(orderdetail.size()==0||orderdetail==null) return 0;
         double t=0;
         for(Product p: orderdetail){
             t += p.getPrice()*p.getQuantity();

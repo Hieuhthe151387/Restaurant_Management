@@ -8,6 +8,7 @@ package DAO;
 import Model.Account;
 import Model.Customer;
 import Model.Employee;
+import Model.Order;
 import Model.Product;
 import java.sql.Connection;
 import java.sql.Date;
@@ -237,6 +238,36 @@ public class DBconnect {
         }
         return list;
     }
+    public String getEmployeeName(String id){
+        String sql = "SELECT * FROM EmployeesTB WHERE EmployeeId=?;";
+        String name = "";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1, id);
+            ResultSet rs = state.executeQuery();
+            if(rs.next()){
+                name =rs.getString("EmployeeName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name;
+    }
+    public String getCustName(String id){
+        String sql = "SELECT * FROM CustomersTB WHERE CustID=?;";
+        String name = "";
+        try {
+            PreparedStatement state = con.prepareStatement(sql);
+            state.setString(1, id);
+            ResultSet rs = state.executeQuery();
+            if(rs.next()){
+                name =rs.getString("CustName");
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return name;
+    }
     public Customer getCustomerById(String id){
         String sql = "SELECT * FROM CustomersTB WHERE CustID=?;";
         Customer cust = new Customer();
@@ -397,10 +428,260 @@ public class DBconnect {
             Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public ArrayList<Order> getOrderList(){
+        String query = "SELECT * FROM [Order]" +
+                       "ORDER BY order_date DESC;";
+        ArrayList<Order> list = new ArrayList<>();
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            ResultSet rs = state.executeQuery();
+            while(rs.next()){
+                Order o = new Order();
+                o.setId(rs.getString("order_id"));
+                o.setDate(rs.getDate("order_date"));
+                o.setCustid(rs.getString("cust_id"));
+                o.setEmid(rs.getString("employee_id"));
+                o.setStatus(rs.getInt("status"));
+                o.setType(rs.getInt("type"));
+                o.setOrderdetail(new ArrayList<>());
+                list.add(o);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }    
+    
+    public ArrayList<Order> getOrderWaitList(){
+        String query = "SELECT * FROM [Order] WHERE status <> 3 AND order_date < GETDATE() AND order_date > GETDATE()-1 ORDER BY order_date DESC;";
+        ArrayList<Order> list = new ArrayList<>();
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            ResultSet rs = state.executeQuery();
+            while(rs.next()){
+                Order o = new Order();
+                o.setId(rs.getString("order_id"));
+                o.setDate(rs.getDate("order_date"));
+                o.setCustid(rs.getString("cust_id"));
+                o.setEmid(rs.getString("employee_id"));
+                o.setStatus(rs.getInt("status"));
+                o.setType(rs.getInt("type"));
+                o.setOrderdetail(new ArrayList<>());
+                list.add(o);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
+    }
+    
+    public Order getOrderById(String id){
+        Order o = new Order();
+        String query="SELECT * FROM (SELECT o.*,od.product_id,p.productname,od.quantity,od.price,od.cost "
+                + "FROM [Order] o, Order_detail od,Product p WHERE o.order_id = od.order_id AND p.product_id = od.product_id)s " +
+                "WHERE order_id = ?;";
+        ArrayList<Product> list = new ArrayList<>();
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setString(1,id);
+            ResultSet rs = state.executeQuery();
+            if(rs.next()){
+                o.setId(rs.getString("order_id"));
+                o.setDate(rs.getDate("order_date"));
+                o.setCustid(rs.getString("cust_id"));
+                o.setEmid(rs.getString("employee_id"));
+                o.setStatus(rs.getInt("status"));
+                o.setType(rs.getInt("type"));
+                Product p = new Product();
+                p.setId(rs.getString("product_id"));
+                p.setName(rs.getString("productname"));
+                p.setPrice(rs.getDouble("price"));
+                p.setCost(rs.getDouble("cost"));
+                p.setQuantity(rs.getInt("quantity"));  
+                list.add(p);
+            }
+            while(rs.next()){
+                Product p = new Product();
+                p.setId(rs.getString("product_id"));
+                p.setName(rs.getString("productname"));
+                p.setPrice(rs.getDouble("price"));
+                p.setCost(rs.getDouble("cost"));
+                p.setQuantity(rs.getInt("quantity"));  
+                list.add(p);   
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        o.setOrderdetail(list);
+        return o;
+    }
+    
+    public void addneworder(Order o){
+        try {
+            con.setAutoCommit(false);
+            PreparedStatement sql1 = con.prepareStatement("INSERT INTO [Order] VALUES(?,?,?,?,?,?)");
+            sql1.setString(1,o.getId());
+            sql1.setDate(2,o.getDate());
+            sql1.setString(3,o.getCustid());
+            sql1.setString(4,o.getEmid());
+            sql1.setInt(5,o.getStatus());
+            sql1.setInt(6, o.getType());
+            sql1.executeUpdate();
+            PreparedStatement sql2 = con.prepareStatement("INSERT INTO Order_detail(order_id,product_id,quantity,price,cost) VALUES (?,?,?,?,?)");
+            for(Product p: o.getOrderdetail()){
+                sql2.setString(1,o.getId());
+                sql2.setString(2,p.getId());
+                sql2.setInt(3,p.getQuantity());
+                sql2.setDouble(4, p.getPrice());
+                sql2.setDouble(5, p.getCost());
+                sql2.executeUpdate();
+            }
+            con.commit();
+        } catch (SQLException ex) {
+            try {
+                con.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void setStatus(String oid,int status){
+        String query = "UPDATE [Order] SET status=? WHERE order_id=?";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setInt(1,status);
+            state.setString(2,oid);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void updateCustOrder(String cid){
+        try {
+            PreparedStatement state = con.prepareStatement("UPDATE [Order] set cust_id ='CS01' where cust_id = ?;");
+            state.setString(1,cid);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateEmOrder(String eid){
+        try {
+            PreparedStatement state = con.prepareStatement("UPDATE [Order] set employee_id ='CS01' where employee_id = ?;");
+            state.setString(1,eid);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void deleteAllItemInOrder(String oid){
+        String query = "DELETE FROM Order_detail WHERE order_id=?";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setString(1,oid);
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void deleteOrder(String oid){
+        try {
+            con.setAutoCommit(false);
+            deleteAllItemInOrder(oid);
+            PreparedStatement sql = con.prepareStatement("DELETE FROM [Order] where order_id='"+oid+"'");
+            sql.executeUpdate();
+        } catch (SQLException ex) {
+            try {
+                con.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        } finally{
+            try {
+                con.commit();
+            } catch (SQLException ex) {
+                Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+    
+    public void updatemetadataorder(Order o){
+        String query ="UPDATE Order SET order_date=?,cust_id=?,employee_id=?,status=?,type=? WHERE order_id=?";
+        try {
+            PreparedStatement state = con.prepareStatement(query);
+            state.setDate(1, o.getDate());
+            state.setString(2, o.getCustid());
+            state.setString(3, o.getEmid());
+            state.setInt(4, o.getStatus());
+            state.setInt(5, o.getType());
+            state.setString(6, o.getId());
+            state.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    public void updateorder(Order o){
+        try {
+            con.setAutoCommit(false);
+            deleteAllItemInOrder(o.getId());
+            updatemetadataorder(o);
+            PreparedStatement sql2 = con.prepareCall("INSERT Order_detail(order_id,product_id,quantity,price,cost) VALUES (?,?,?,?,?)");
+            for(Product p: o.getOrderdetail()){
+                sql2.setString(1,o.getId());
+                sql2.setString(2,p.getId());
+                sql2.setInt(3,p.getQuantity());
+                sql2.setDouble(4, p.getPrice());
+                sql2.setDouble(5, p.getCost());
+            }
+        } catch (SQLException ex) {
+            try {
+                con.rollback();
+            } catch (SQLException ex1) {
+                Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex1);
+            }
+            Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally{
+            try {
+                con.setAutoCommit(true);
+            } catch (SQLException ex) {
+                Logger.getLogger(DBconnect.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
 }
-//class demo {  
+
+//class demo{
 //    public static void main(String[] args) {
-//        DBconnect con = new DBconnect();
-//        
+//        DBconnect db = new DBconnect();
+////        System.out.println(db.getCustName("CS02")+db.getEmployeeName("EM02"));
+////        Order o = db.getOrderById("OD01");
+////        System.out.println(o.getId()+" "+o.getCustid()+" "+o.getEmid()+" "+o.getDate()+" "+o.getStatus()+" "+o.getType()+" "+o.getOrderdetail().size());
+////        db.setStatus("OD05", 2);
+////        o = db.getOrderById("OD05");
+////        System.out.println(o.getId()+" "+o.getCustid()+" "+o.getEmid()+" "+o.getDate()+" "+o.getStatus()+" "+o.getType()+" "+o.getOrderdetail().size());
+////        for(Product p: o.getOrderdetail()){
+////            System.out.println(p.getId()+" "+p.getName()+" "+p.getcost()+" "+p.getprice());
+////        }
+//        for(Order ol: db.getOrderWaitList()){
+//            System.out.println(ol.getId()+" "+ol.getCustid()+" "+ol.getEmid()+" "+ol.getDate()+" "+ol.getStatus()+" "+ol.getType());
+//        }
+////        o.setId("OD05");
+////        db.deleteOrder("OD05");
+////        db.deleteOrder("OD05");
+////        System.out.println(o.getTotal()+" "+o.getBenefit());
 //    }
 //}

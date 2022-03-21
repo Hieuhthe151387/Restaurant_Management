@@ -14,19 +14,19 @@
 <!--	<link rel="stylesheet" type="text/css" href="css/style.css">-->
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
 	 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-         <c:if test="${sessionScope.user==null}">
+         <%--<c:if test="${sessionScope.user==null}">
              <%
                  request.setAttribute("error", "Access denied! Please login!");
                  response.sendRedirect(request.getContextPath()+"/login");
              %>
-         </c:if>
+         </c:if>--%>
 </head>
 <body>
 	<div class="container">
 		<div class="navigation">
 			<ul>
 				<li>
-                                    <a href="home.jsp">
+                                    <a href="home">
 					<span class="icon">
 					<i class="fa fa-cutlery" aria-hidden="true"></i></span>
 					<span class="title">
@@ -35,7 +35,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="home.jsp">
+					<a href="home">
 					<span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span>
 					<span class="title">
 						Dashboard
@@ -43,7 +43,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="menu">
 					<span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
 					<span class="title">
 						Menu
@@ -51,7 +51,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="order">
 					<span class="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
 					<span class="title">
 						Orders
@@ -75,7 +75,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="customer">
 					<span class="icon"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
 					<span class="title">
 						Customer
@@ -150,7 +150,7 @@
 				<div class="recentOrders">
 					<div class="cardHeader">
 						<h2>Recent Orders</h2>
-						<a href="#" class="btn">View all</a>
+						<a href="order" class="btn">View all</a>
 					</div>
 					<table>
 						<thead>

@@ -23,7 +23,7 @@
 		<div class="navigation">
 			<ul>
 				<li>
-                                    <a href="home.jsp">
+                                    <a href="home">
 					<span class="icon">
 					<i class="fa fa-cutlery" aria-hidden="true"></i></span>
 					<span class="title">
@@ -32,7 +32,7 @@
 					</a>
 				</li>
 				<li>
-                                    <a href="home.jsp">
+                                    <a href="home">
 					<span class="icon"><i class="fa fa-home" aria-hidden="true"></i></span>
 					<span class="title">
 						Dashboard
@@ -48,7 +48,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="order">
 					<span class="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
 					<span class="title">
 						Orders
