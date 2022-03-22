@@ -10,6 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
+        <link href="css/signin.css" rel="stylesheet" type="text/css">
         <link href="css/signin.css" rel="stylesheet" type="text/css"/>
         <% 
             boolean logout = request.getParameter("logout")==null;

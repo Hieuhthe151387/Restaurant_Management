@@ -199,42 +199,42 @@
 					<span class="close" onclick="closeCard()">X</span>
 				</div>
 				<div class="details">
-                                    <form name="foodedit" action="menu" method="post">
+                                    <form name="foodedit" action="updatemenu" method="post">
 						<div class="inputBx">
 							<span class="title">ID</span>
-							<input type="text" name="id" id="eid" value="${productview.id}" readonly/>
+                                                        <input type="text" name="id" id="eid" value="${productview.id}" readonly/>
 						</div>
 						<div class="inputBx">
 							<span class="title">Name</span>
-							<input type="text" name="name" id="ename" value="${productview.name}" readonly />
+							<input type="text" name="name" id="ename" value="${productview.name}"/>
 							<label for="price" id="ename" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>
 						<div class="inputBx">
 							<span class="title">Price</span>
-							<input type="text" name="price" id="eprice" value="${productview.getprice()}"  readonly />
+							<input type="text" name="price" id="eprice" value="${productview.getprice()}"/>
 							<label for="price" id="eprice" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>
 						<div class="inputBx">
 							<span class="title">Cost</span>
-							<input type="text" name="cost" id="ecost" value="${productview.getcost()}" readonly />
+							<input type="text" name="cost" id="ecost" value="${productview.getcost()}" />
 							<label for="cost" id="ecost" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>
                                                 <div class="inputBx">
 							<span class="title">Quantity</span>
-							<input type="number" name="quan" id="equan" value="${productview.quantity}" readonly />
+							<input type="number" name="quan" id="equan" value="${productview.quantity}" />
 							<label for="cost" id="equan" class="icon">
 							<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 							</label>
 						</div>        
 						<div class="footer">
                                                     <input type="hidden" name="req" value="u"/>
-<button class="btn" id="updatef" disabled>Update</button>
+<button class="btn" id="updatef">Update</button>
 <button class="btn" id="deletef" type="button" onclick="delfood('${requestScope.viewid}')" >Delete</button>
 <button class="btn" id="cancelf" type="button" onclick="cancelupdate()" disabled>Cancel</button>
 						</div>
@@ -279,7 +279,7 @@
 		let cancelf = document.getElementById('cancelf');
 		let editspan = document.getElementsByClassName('icon');
 		for(let i = 0; i<editspan.length;i++){
-			editspan[i].addEventListener('click',editlabel);
+			editspan[i].addEventListener('change',editlabel);
 		}
 		const remeber=[];
 		let checkedit = false;

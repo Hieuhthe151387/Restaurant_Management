@@ -663,25 +663,3 @@ public class DBconnect {
         }
     }
 }
-
-//class demo{
-//    public static void main(String[] args) {
-//        DBconnect db = new DBconnect();
-////        System.out.println(db.getCustName("CS02")+db.getEmployeeName("EM02"));
-////        Order o = db.getOrderById("OD01");
-////        System.out.println(o.getId()+" "+o.getCustid()+" "+o.getEmid()+" "+o.getDate()+" "+o.getStatus()+" "+o.getType()+" "+o.getOrderdetail().size());
-////        db.setStatus("OD05", 2);
-////        o = db.getOrderById("OD05");
-////        System.out.println(o.getId()+" "+o.getCustid()+" "+o.getEmid()+" "+o.getDate()+" "+o.getStatus()+" "+o.getType()+" "+o.getOrderdetail().size());
-////        for(Product p: o.getOrderdetail()){
-////            System.out.println(p.getId()+" "+p.getName()+" "+p.getcost()+" "+p.getprice());
-////        }
-//        for(Order ol: db.getOrderWaitList()){
-//            System.out.println(ol.getId()+" "+ol.getCustid()+" "+ol.getEmid()+" "+ol.getDate()+" "+ol.getStatus()+" "+ol.getType());
-//        }
-////        o.setId("OD05");
-////        db.deleteOrder("OD05");
-////        db.deleteOrder("OD05");
-////        System.out.println(o.getTotal()+" "+o.getBenefit());
-//    }
-//}

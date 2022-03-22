@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class menu extends HttpServlet {
+public class MenuServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,11 +38,10 @@ public class menu extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet menu</title>");            
+            out.println("<title>Servlet MenuServlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("This record had been "+request.getAttribute("message"));
-            out.println("<a href=\"menu\">Go back</a>");
+            out.println("<h1>Servlet MenuServlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,6 +63,7 @@ public class menu extends HttpServlet {
         request.getSession().removeAttribute("listproduct");
         ArrayList<Product> list = new DBconnect().getListProduct();
         request.getSession().setAttribute("listproduct", list);
+        String url = request.getContextPath()+"/menu/view";
         request.getRequestDispatcher("menu.jsp").forward(request, response);
     }
 
@@ -75,63 +75,10 @@ public class menu extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    private Product parseProduct(HttpServletRequest request){
-           Product p = new Product();
-            p.setId(request.getParameter("id"));
-            p.setName(request.getParameter("name"));
-            p.setPrice(request.getParameter("price"));
-            p.setCost(request.getParameter("cost"));
-            p.setQuantity(Integer.parseInt(request.getParameter("quan")));
-            return p;
-    }
-    
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
-        String req = request.getParameter("req");
-        DBconnect db = new DBconnect();
-        Product p = new Product();
-        String id="",newid;
-        if(req.equals("v")||req.equals("r")) {id=request.getParameter("id");}
-        
-        switch(req){
-            case "v": p = db.getProductById(id);
-                      request.setAttribute("viewid", id);
-                      request.setAttribute("productview", p);
-                break;
-           case "u": p = parseProduct(request);
-                      db.updateProduct(p);
-                      request.setAttribute("message", "updated");
-//                      response.sendRedirect("customer");
-                      processRequest(request, response);
-                break;
-//                remove an cust 
-            case "r":db.deleteProduct(id);
-                    request.setAttribute("message", "removed");
-                break;
-//            request create new cust
-            case "c": newid = db.getNewId(2);
-                      request.setAttribute("newId",newid);
-                break;
-//            request submit info of new cust had been create
-             case "s":p = parseProduct(request);
-                      db.createProduct(p);
-                      request.setAttribute("message","create");
-                break;
-            default: break;
-        }
-        if(req.equals("v")||req.equals("c")){
-        request.getRequestDispatcher("/menu.jsp").forward(request, response);
-        }
-        else {
-            response.getOutputStream().flush();
-            response.sendRedirect("menu");
-        }
- /*        */
+        processRequest(request, response);
     }
 
     /**
