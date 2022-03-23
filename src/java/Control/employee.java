@@ -72,9 +72,10 @@ public class employee extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         DBconnect db = new DBconnect();
+        request.getSession().removeAttribute("listemployee");
         ArrayList<Employee> list = db.getListEmployees();
         request.getSession().setAttribute("listemployee", list);
-        request.getRequestDispatcher("/employee.jsp").forward(request, response);
+        request.getRequestDispatcher("employee.jsp").forward(request, response);
     }
 
     /**
@@ -126,7 +127,7 @@ public class employee extends HttpServlet {
                       db.updateEmployee(em);
                       request.setAttribute("message", "updated");
 //                      response.sendRedirect("employee");
-                      processRequest(request, response);
+//                      processRequest(request, response);
                 break;
 //                remove an em 
             case "r":db.deleteEmployee(id);
@@ -145,7 +146,10 @@ public class employee extends HttpServlet {
         if(req.equals("v")||req.equals("c")){
         request.getRequestDispatcher("/employee.jsp").forward(request, response);
         }
-        else processRequest(request, response);
+        else {
+            request.setAttribute("topage", "employee");
+            request.getRequestDispatcher("temp").forward(request, response);
+        };
     }
 
     /**

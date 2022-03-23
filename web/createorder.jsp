@@ -1,6 +1,6 @@
 <%-- 
-    Document   : order
-    Created on : 20-Mar-2022, 22:37:50
+    Document   : createorder
+    Created on : 22-Mar-2022, 19:29:22
     Author     : Admin
 --%>
 
@@ -11,19 +11,17 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>Order</title>
-        <link href="css/order.css" rel="stylesheet" type="text/css"/>
-	<!--<link rel="stylesheet" type="text/css" href="css/order.css">-->
+	<title>Create Order</title>
+        <link href="css/createorder.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <c:set var="orderview" scope="request" value="${sessionScope.orderview}"/>
-        <c:set var="custorder" scope="request" value="${sessionScope.custorder}"/>
+        <c:set value="${sessionScope.listfood}"  scope="session" var="listfood"/>
         <c:set var="listcust" scope="session" value="${sessionScope.listcust}"/>
-        <c:set var="listorder" scope="session" value="${sessionScope.listorder}"/>
-        <c:set var="newid" scope="session" value="${sessionScope.newid}"/>
+        <c:set var="cart" scope="session" value="${sessionScope.cart}"/>
+        <c:set var="custorder" scope="session" value="${sessionScope.custorder}"/>
 </head>
 <body>
-    <div class="container">
-        <div class="navigation">
+	<div class="container">
+		<div class="navigation">
 			<ul>
 				<li>
 					<a href="home">
@@ -92,11 +90,11 @@
 				</li>
 			</ul>
 		</div>
-    <form name="orderform" hidden></form>
-    <div class="main">
-   	<div class="topbar">
-            <div class="toggle"onclick="toggleMenu();">
-            </div>
+            <form name="foodform" method="post" hidden></form>
+   		<div class="main">
+   			<div class="topbar">
+   				<div class="toggle"onclick="toggleMenu();">
+   				</div>
    				<div class="search">
    					<label>
    						<i class="fa fa-search" aria-hidden="true"></i>
@@ -111,75 +109,57 @@
 			<div class="details">
 				<div class="leftCard">
 					<div class="cardHeader">
-						<h2>Danh sách đơn hàng</h2>
-						<div class="btn" onclick="addorder()">Thêm</div>
+						<h2>Menu</h2>
 					</div>
-                                        <c:if test="${listorder.size()>0}">
-					<table>
-						<thead>
-							<tr>
-								<td>STT</td>
-								<td>Khách hàng</td>
-								<td>Nhân viên</td>
-								<td>Ngày</td>
-								<td>Trạng thái</td>
-							</tr>
-						</thead>
-						<tbody>
-                                                    <c:forEach var="i" begin="0" end="${listorder.size()-1}">
-                                                        <tr class="orderdata" id="${listorder.get(i).id}">
-								<td>${i+1}</td>
-								<td>${listorder.get(i).getCustName()}</td>
-								<td>${listorder.get(i).getEmName()}</td>
-								<td>${listorder.get(i).date}</td>
-								<td><span class="status ${listorder.get(i).getClassStatus()}">${listorder.get(i).getstatus()}</span></td>
-							</tr>
-                                                    </c:forEach>
-						</tbody>
-					</table>
-                                        </c:if>
+					<div class="session">
+                                            
+                                            <c:forEach var="food" items="${listfood}">
+						<div class="product_tag">
+							<img src="images/foods.png" alt="product">
+							<div class="title">
+								<p>${food.getName()}</p>
+								<p>${food.getprice()}</p>
+								<button onclick="Addtocard('${food.id}')">Add to cart</button>
+							</div>
+						</div>                                                
+                                            </c:forEach>	
+					</div>
 				</div>
 				<div class="rightCard">
 					<div class="cardHeader">
 						<h2>Thông tin hoá đơn</h2>
-						<span class="close <c:if test="${orderview==null}">hidden</c:if>" onclick="closeCard()"><i class="fa fa-times" aria-hidden="true"></i></span>
+						<span class="close" onclick="closeCard()"><i class="fa fa-times" aria-hidden="true"></i></span>
 					</div>
-					<div class="empty <c:if test="${orderview!=null}">hidden</c:if>"">
+					<div class="empty hidden">
 						<div class="icon"><i class="fa fa-archive" aria-hidden="true"></i></div>
 						<div class="h2">Chọn một Hoá đơn để xem chi tiết</div>
 					</div>
-                                    <div class="session <c:if test="${orderview==null}">hidden</c:if>">
-                                        <c:if test="${orderview!=null}">
-						<form method="post" action="order" name="orderdetails">
+					<div class="session">
+						<form method="post" name="orderform">
 <div class="content">
 		<div class="header">
 			<input type="text" id="emid" name="emid" readonly value="EM02" hidden />
 			<div class="inputBx short">
 				<span>Order Id:</span>
-				<input type="text" name="orderid" id="orderid" readonly value="${orderview.id}"/>
+				<input type="text" name="orderid" id="orderid" readonly value="${cart.id}"/>
 			</div>
 			<div class="inputBx">
 				<span>Họ và tên:</span>
-				<select name="name" id="custname" onchange="changecust()" disabled />
+				<select name="name" id="custname" onchange="changecust()"/>
                                 <option value="${custorder.ID}">${custorder.name}</option>
                                 <c:forEach var="cust" items="${listcust}">
                                         <option value="${cust.ID}">${cust.name}</option>
 					<option value="${cust.phoneNumber}, ${cust.address}" hidden></option>    
                                 </c:forEach>
 				</select>
-				<!-- <input type="text" id="name" name="name" readonly value="Hoàng "/> -->
-				<label for="name" id="name" class="icon">
-					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
-				</label>
 			</div>
 			<div class="inputBx">
 				<span>Số điện thoại</span>
-				<input type="text" id="phonenum" name="phonenum" readonly value="${custorder.phoneNumber}"/>
+                                <input type="text" id="phonenum" name="phonenum" readonly value="${custorder.phoneNumber}"/>
 			</div>
-			<div class="inputBx short">
+			<div class="inputBx short" onchange="changepos()">
 				<span>Đơn hàng</span>
-				<select name="position" onchange="changepos()" id="position" disabled>
-                                    <option value="${orderview.type}">${orderview.gettype()}</option>
+				<select name="position" id="position" disabled>
 					<option value="0">Tại quán</option>
 					<option value="1">Ship</option>
 				</select>
@@ -189,7 +169,7 @@
 			</div>
 			<div class="inputBx ">
 				<span>Ngày</span>
-				<input type="date" id="dateorder"  name="dateorder" readonly value="${orderview.date}"/>
+				<input type="date" id="dateorder"  name="dateorder" value="${cart.date}"/>
 				<label for="dateorder" id="dateorder" class="icon">
 					<i class="fa fa-pencil-square-o" aria-hidden="true"></i>
 				</label>
@@ -197,7 +177,7 @@
 			<div class="inputBx">
 					<span>Status</span>
 					<select name="status" id="status" onchange="changestatus()">
-					<option value="${orderview.getClassStatus()}">${orderview.getstatus()}</option>
+					<option value="${cart.status}">${cart.getstatus()}</option>
 					<option value="0">Chưa nhận</option>
 					<option value="1">Đang xử lý</option>
 					<option value="2">Hoàn thành</option>
@@ -205,7 +185,7 @@
 					<option value="4">Huỷ đơn</option>
 					</select>
 			</div>
-                        <div class="addressBx show <c:if test="${orderview.getType()==0}">hidden</c:if>">
+			<div class="addressBx show hidden">
 				<div class="before" onclick="showaddress()">+</div>
 				<div class="inputBx">
 					<span>Thôn</span>
@@ -225,59 +205,54 @@
 				</div>
 			</div>				
 	</div>
-	<div class="infor <c:if test="${orderview.getType()==1}">hidden</c:if>">
-                        <table>
-                                <thead>
-                                    <tr>
-                                        <td>STT</td>
-                                        <td>Tên món</td>
-                                        <td>Số lượng</td>
-                                        <td>Đơn giá</td>
-                                    </tr>
-                                </thead>
-                        <c:if test="${orderview.orderdetail.size()>0 && orderview.orderdetail!=null}">
-                            <tbody>
-                                <c:forEach var="i" begin="0" end="${orderview.orderdetail.size()-1}">
-                                        <tr>
-                                                <td>${i+1}</td>
-                                                <td>${orderview.orderdetail.get(i).name}</td>
-                                                <td>${orderview.orderdetail.get(i).quantity}</td>
-                                                <td>${orderview.orderdetail.get(i).getprice()}</td>
-                                        </tr>    
-                                </c:forEach>
-                            </tbody>
-                        </c:if>
-                        </table>
+	<div class="infor">
+		<table>
+			<thead>
+				<tr>
+					<td>Tên món</td>
+					<td>Số lượng</td>
+					<td>Đơn giá</td>
+					<td>Thành tiền</td>
+				</tr>
+			</thead>
+			<tbody>
+                            <c:forEach var="fcart" items="${cart.orderdetail}" >
+				<tr>
+					<td>${fcart.name}</td>
+                                        <td>
+                                            <span class="btnf" onclick="desc('${fcart.id}')">-</span>
+                                            <%--<input type="number" id="${fcart.id}" name="quantity" onchange="changequantity('${fcart.id}')" value="${fcart.quantity}"/>--%>
+                                            <span class="btnf" onclick="increase('${fcart.id}')">+</span>
+                                        </td>
+                                        <td>${fcart.getprice()}</td>
+					<td>${fcart.quantity*fcart.price}</td>
+				</tr>
+                            </c:forEach>
+			</tbody>
+		</table>
+	</div>	
+	<hr>
+	<div class="total"><span>Tổng tiền:</span>${cart.getTotal()} VNĐ</div>
+	<div class="footer">
+                <input type="text" name="req" value="submit" hidden/>
+		<button class="btnf" id="update" type="submit">Tạo đơn hàng</button>
+		<button class="btnf" id="cancel" type="button" onclick="cancelupdate()">Cancel</button>
+	</div>		
+</div>
+                                                </form>
+				</div>
+			</div>
 	</div>
-        <hr>
-        <div class="total"><span>Tổng tiền:</span>${orderview.getTotal()} VNĐ</div>
-        <div class="footer">
-            <input type="text" name="req" value="u" hidden/>
-            <button class="btnf" id="addf" type="button" onclick="addfood()">Add food</button>
-            <button class="btnf" id="update" type="submit" disabled>Update</button>
-            <button class="btnf" id="delete" type="button" onclick="deleteorder()">Delete</button>
-            <button class="btnf" id="set" type="button" onclick="setstatus()" disabled>Set status</button>
-            <button class="btnf" id="cancel" type="button" onclick="cancelupdate()" disabled>Cancel</button>
-        </div>		
-        </div>
-                             </form>
-                     </c:if>
-                                    </div>
-            </div>
-	</div>
-    </div>
 </div>
 	<script>
 // 		intial global 
 		let updatef = document.getElementById('update');
 		let cancelf = document.getElementById('cancel');
-		let setf = document.getElementById('set');
-		let editspan = document.getElementsByClassName('icon');
-		let remeber=[];
 		let checkedit = false;
 		let change = false;
-		let changep=false;
-
+		let remeber = [];
+		let editspan = document.getElementsByClassName('icon');
+		let oid = document.getElementById('orderid').value;
 		function toggleMenu(){
 			let toggle = document.querySelector('.toggle');
 			let navigation = document.querySelector('.navigation');
@@ -287,43 +262,42 @@
 			main.classList.toggle('active');
 		}
 
-// --------------------------------------------------------------------------
-		let orderdata=document.getElementsByClassName('orderdata');
-		for(let i = 0; i<orderdata.length;i++){
-			orderdata[i].addEventListener('click',viewdetail);
+		// --------------------------------------------------------------------------
+		// let orderdata=document.getElementsByClassName('orderdata');
+		// for(let i = 0; i<orderdata.length;i++){
+		// 	orderdata[i].addEventListener('click',viewdetail);
+		// }
+		// function viewdetail(){
+		// 	closeCard();
+		// 	let oform = document.orderform;
+		// 	console.log(this.id);
+		// 	oform.action=""
+		// 	// oform.submit();
+		// }
+                function desc(fid){
+			let quan = document.getElementById(fid);
+			quan.value=quan.value-1;
+			changequantity(fid);
+		}
+		function increase(fid){
+			let quan = document.getElementById(fid);
+			let quantity = Number(quan.value);
+			quan.value=(1+quantity);
+			changequantity(fid);
+		}
+		function changequantity(fid){
+			let orderform = document.foodform;
+			let quan = document.getElementById(fid).value;
+			orderform.action = "createorder?req=update&quantity="+quan+"&fid="+fid;
+			orderform.submit();
+		}
+		function Addtocard(fid){
+			let orderform = document.foodform;
+			orderform.action="createorder?req=add&fid="+fid;
+//                        console.log(orderform.action);
+			orderform.submit();
 		}
 
-		function viewdetail(){
-			let oform = document.orderform;
-			oform.action="order?req=v&&oid="+this.id;
-			oform.method = "post";
-                        oform.submit();
-		}
-                function changestatus(){
-			change=true;
-			cancelf.removeAttribute('disabled');
-			setf.removeAttribute('disabled');
-		}
-		function addfood(){
-			let oform = document.orderform;
-			if (checkedit||change) {
-				if(!confirm("Some changed in updating form with be discard? You want to close this card!")) return;
-			}
-			oform.action = "createorder.jsp?req=addf";
-                        oform.method="get";
-			// orderform.submit();
-			console.log('you have been clicked off from this page2!');
-		}
-		function addorder(){
-			let oform = document.orderform;
-			if (checkedit||change) {
-				if(!confirm("Some changed in updating form with be discard? You want to close this card!")) return;
-			}
-                        oform.action = "createorder?req=addo";
-                        oform.method="get";
-			orderform.submit();
-			console.log('you have been clicked off from this page1!');
-		}
 		function closeCard(){
 			if (checkedit||change) {
 				if(!confirm("Some changed in updating form with be discard? You want to close this card!")) return;
@@ -343,35 +317,23 @@
 			let phonenum = document.getElementById('phonenum');
 			let a=[];
 			for(let j =0;j<4;j++){
-				a[j]=document.getElementById('address'+j);
+				a[j]=document.getElementById('address'+j)
 			}
 			let s = name.options[name.selectedIndex+1].value.split(',');
-			phonenum.value = s[0];
+			phonenum.value = s[0]
 			for(let z = 1; z<s.length;z++){
 				a[z-1].value=s[z].trim();
 			}
 		}
 
-		function setstatus(){
-			if (checkedit) {
-				if(!confirm("Some changed in updating form with be discard? You want to close this card!")) return;
-			}
-			let status = document.getElementById('status');
-			let oform = document.orderform;// get hidden form
-			let oid = document.getElementById('orderid').value;
-			oform.action ="order?req=st&oid="+oid+"&st="+status.value;
-                        oform.method="post";
-			console.log('you have setstatus');
-			console.log(oform.action);
-			oform.submit();
-		}
+
 		function deleteorder(){
 			if(!confirm('Thao tác này sẽ gây mât dữ liệu! Bạn muốn tiếp tục xoá bản ghi này không ?')) return;
 			let oform = document.orderform;// get hidden form
 			let oid = document.getElementById('orderid').value;
-			oform.action="order?req=r&&oid="+oid;
-                        oform.method="post";
-			oform.submit();
+			oform.action="?req=r&&id="+oid;
+			console.log(oform.action);
+			// oform.submit();
 		}
 		for(let i = 0; i<editspan.length;i++){
 			editspan[i].addEventListener('click',editorder);
@@ -390,20 +352,27 @@
 			checkedit=true;
 		}
 
+
+		function changestatus(){
+			change=true;
+			cancelf.removeAttribute('disabled');
+			setf.removeAttribute('disabled');
+		}
+
 		function changepos(){
 			changep=true;
 			let pos = document.getElementById('position');
 			let btn = document.querySelector('.before');
 			let abox = document.querySelector('.addressBx');
 			let ibox = document.querySelector('.infor');
-//			console.log(pos.value+change+(pos.value==1)+(pos.value===1));
+			console.log(pos.value+change);
 			// ibox.classList.toggle('hidden');	
-			if(pos.value==1){
+			if(pos.value=='ship'){
 				ibox.classList.add('hidden');
-				abox.classList.remove('hidden');
+				abox.classList.remove('hidden')
 				abox.classList.add('show');
 			}
-			if(pos.value!=1){
+			if(pos.value!='ship'){
 				abox.classList.remove('show');
 				abox.classList.add('hidden');
 				ibox.classList.remove('hidden');
@@ -418,11 +387,6 @@
 			ibox.classList.toggle('hidden');
 		}
 
-		function updateorder(){
-			let updateform = document.orderdetails;
-			console.log("you\'re done.");
-		}
-
 		function cancelupdate(){
 			console.log('here');
 			let updatef = document.getElementById('update');
@@ -435,7 +399,7 @@
 					remeber[i].setAttribute('readonly',true);
 			}
 			document.orderdetails.reset();
-			if(changep===true) changepos();//rest class address and infor of rtag
+			if(changep==true) changepos();//rest class address and infor of rtag
 			changep = false;
 			checkedit=false;
 			updatef.setAttribute('disabled',true);

@@ -101,10 +101,11 @@ public class LoginFilter implements Filter {
             throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
         HttpServletResponse res = (HttpServletResponse)response;
+        String url = req.getContextPath()+"/login";
         if(req.getServletPath().endsWith("/login")){
             chain.doFilter(request, response);
         }else if(req.getSession().getAttribute("user")!=null) chain.doFilter(request, response);
-        else res.sendRedirect("login");
+        else res.sendRedirect(url);
     }
 
     /**

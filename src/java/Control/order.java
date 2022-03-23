@@ -99,8 +99,6 @@ public class order extends HttpServlet {
                       break;
             case "st": db.setStatus(oid, Integer.parseInt(request.getParameter("st")));   
                       request.setAttribute("message", "have changed status");
-//                      response.sendRedirect("customer");
-                      processRequest(request, response);
                 break;
 //                remove an cust 
             case "r":db.deleteOrder(oid);
@@ -118,9 +116,12 @@ public class order extends HttpServlet {
    */         default: break;
         }
         if(req.equals("v")||req.equals("st")){
-        request.getRequestDispatcher("/order.jsp").forward(request, response);
+        request.getRequestDispatcher("order.jsp").forward(request, response);
         }
-        else processRequest(request, response);
+        else {
+            request.setAttribute("topage", "order");
+            request.getRequestDispatcher("temp").forward(request, response);
+        }
     }
 
     /**

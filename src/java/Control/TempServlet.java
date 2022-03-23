@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class MenuServlet extends HttpServlet {
+public class TempServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -59,12 +59,8 @@ public class MenuServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.getSession().removeAttribute("listproduct");
-        ArrayList<Product> list = new DBconnect().getListProduct();
-        request.getSession().setAttribute("listproduct", list);
-        String url = request.getContextPath()+"/menu/view";
-        request.getRequestDispatcher("menu.jsp").forward(request, response);
+        String page = (String)request.getAttribute("topage");
+        response.sendRedirect(page);
     }
 
     /**
@@ -78,7 +74,8 @@ public class MenuServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        String page = (String)request.getAttribute("topage");
+        response.sendRedirect(request.getContextPath()+"/"+page);
     }
 
     /**

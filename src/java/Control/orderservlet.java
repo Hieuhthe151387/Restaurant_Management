@@ -1,11 +1,15 @@
+package Control;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Control;
 
 import DAO.DBconnect;
+import Model.Customer;
+import Model.ListProduct;
+import Model.Order;
 import Model.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -19,7 +23,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author Admin
  */
-public class menu extends HttpServlet {
+public class orderservlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -38,11 +42,10 @@ public class menu extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet menu</title>");            
+            out.println("<title>Servlet orderservlet</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("This record had been "+request.getAttribute("message"));
-            out.println("<a href=\"menu\">Go back</a>");
+            out.println("<h1>Servlet orderservlet at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -60,11 +63,23 @@ public class menu extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        DBconnect db = new DBconnect();
+        ArrayList<Product> list = db.getListProduct();
+        request.getSession().removeAttribute("listcust");
+        ArrayList<Customer> custlist = db.getListCustomer();
+        request.getSession().setAttribute("listcust", custlist);
+        request.getSession().setAttribute("listfood", list);
+        String req = request.getParameter("req");
+        if(req==null){req="";}
+        if(req.equals("addf")){
+            request.getSession().setAttribute("cart", request.getSession().getAttribute("orderview"));
+        }else{
+            Order cart = new Order();
+            cart.setId(db.getNewId(4));
+            request.getSession().setAttribute("cart", cart);
+        }
         response.setContentType("text/html;charset=UTF-8");
-        request.getSession().removeAttribute("listproduct");
-        ArrayList<Product> list = new DBconnect().getListProduct();
-        request.getSession().setAttribute("listproduct", list);
-        request.getRequestDispatcher("menu.jsp").forward(request, response);
+        request.getRequestDispatcher("createorder.jsp").forward(request, response);// path without /
     }
 
     /**
@@ -75,63 +90,31 @@ public class menu extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-
-    private Product parseProduct(HttpServletRequest request){
-           Product p = new Product();
-            p.setId(request.getParameter("id"));
-            p.setName(request.getParameter("name"));
-            p.setPrice(request.getParameter("price"));
-            p.setCost(request.getParameter("cost"));
-            p.setQuantity(Integer.parseInt(request.getParameter("quan")));
-            return p;
-    }
-    
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        request.setCharacterEncoding("UTF-8");
+         DBconnect db = new DBconnect();
         String req = request.getParameter("req");
-        DBconnect db = new DBconnect();
-        Product p = new Product();
-        String id="",newid;
-        String page="";
-        if(req.equals("v")||req.equals("r")) {id=request.getParameter("id");}
-        
+        String fid = request.getParameter("fid");
+        request.getSession().getAttribute("cart");
+        ListProduct foodlist = new ListProduct();
+        ArrayList<Product> list = db.getListProduct();
+        foodlist.setList(list);
+        Order cart = (Order)request.getSession().getAttribute("cart");
         switch(req){
-            case "v": p = db.getProductById(id);
-                      request.setAttribute("viewid", id);
-                      request.setAttribute("productview", p);
-                      request.getRequestDispatcher("viewmenu.jsp").forward(request, response);
-                      break;
-           case "u": p = parseProduct(request);
-                      db.updateProduct(p);
-                      request.setAttribute("message", "updated");
+            case "add": cart.addProduct(foodlist.getProductById(fid));
+                        break;
+            case "update":int quan = Integer.parseInt(request.getParameter("quantity"));
+                        cart.getProduct(fid).setQuantity(quan);
+                        if(quan==0) cart.removeProduct(fid);
                 break;
-//                remove an cust 
-            case "r":db.deleteProduct(id);
-                    request.setAttribute("message", "removed");
-                break;
-//            request create new cust
-            case "c": newid = db.getNewId(2);
-                      request.setAttribute("newId",newid);
-                break;
-//            request submit info of new cust had been create
-             case "s":p = parseProduct(request);
-                      db.createProduct(p);
-                      request.setAttribute("message","create");
-                break;
-            default: break;
+            case "submit":
+//                           db.addneworder(cart);
+//                           request.getSession().removeAttribute("cart");
         }
-        if(req.equals("v")||req.equals("c")){
-            request.getRequestDispatcher("menu.jsp").forward(request, response);
-        }
-        else {
-            request.setAttribute("topage", "menu");
-            request.getRequestDispatcher("temp").forward(request, response);
-        }
- /*        */
+//        request.getSession().setAttribute("cart", cart);
+        response.setContentType("text/html;charset=UTF-8");
+        request.getRequestDispatcher("createorder.jsp").forward(request, response);// path without /
     }
 
     /**

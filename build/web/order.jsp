@@ -43,7 +43,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="menu">
 					<span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
 					<span class="title">
 						Menu
@@ -51,7 +51,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="order">
 					<span class="icon"><i class="fa fa-book" aria-hidden="true"></i></span>
 					<span class="title">
 						Orders
@@ -67,7 +67,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="employee">
 					<span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
 					<span class="title">
 						Employee
@@ -75,7 +75,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="customer">
 					<span class="icon"><i class="fa fa-address-book-o" aria-hidden="true"></i></span>
 					<span class="title">
 						Customer
@@ -83,7 +83,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="signin.jsp?logout=out">
 					<span class="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
 					<span class="title">
 						Logout
@@ -209,19 +209,19 @@
 				<div class="before" onclick="showaddress()">+</div>
 				<div class="inputBx">
 					<span>Thôn</span>
-					<input type="text" id="address0" name="address0" readonly value="Cống Khê"/>
+					<input type="text" id="address0" name="address0" readonly value="${custorder.getAddress(0)}"/>
 				</div>
 				<div class="inputBx">
 					<span>Xã, thị trấn</span>
-					<input type="text" id="address1" name="address1" readonly value="Hoà Lâm"/>
+					<input type="text" id="address1" name="address1" readonly value="${custorder.getAddress(1)}"/>
 				</div>
 				<div class="inputBx">
 					<span>Quận,huyện</span>
-					<input type="text" id="address2" name="address2" readonly value="Ứng Hoà"/>
+					<input type="text" id="address2" name="address2" readonly value="${custorder.getAddress(2)}"/>
 				</div>
 				<div class="inputBx">
 					<span>Tỉnh, thành phố</span>
-					<input type="text" id="address3" name="address3" readonly value="Hà Nội"/>
+					<input type="text" id="address3" name="address3" readonly value="${custorder.getAddress(3)}"/>
 				</div>
 			</div>				
 	</div>
@@ -319,9 +319,9 @@
 			if (checkedit||change) {
 				if(!confirm("Some changed in updating form with be discard? You want to close this card!")) return;
 			}
-                        oform.action = "createorder.jsp?req=addo";
+                        oform.action = "createorder?req=addo";
                         oform.method="get";
-			// orderform.submit();
+			orderform.submit();
 			console.log('you have been clicked off from this page1!');
 		}
 		function closeCard(){

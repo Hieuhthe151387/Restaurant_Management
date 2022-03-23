@@ -105,6 +105,11 @@ public class People{
     }
     
     public String getAddress(int i){
+        String[] arr = this.address.split(",");
+        if(arr.length<4){
+            if(i<arr.length) return arr[i].trim();
+            else return "";
+        }
         return this.address.split(",")[i].trim();
     }
 }

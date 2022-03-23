@@ -285,6 +285,10 @@ body{
 	border-radius: 8px;
 	padding: 20px;
 }
+.rightCard .cardHeader h2{
+    font-size: 1rem;
+    font-weight: 400;
+}
 
 .details .rightCard .imgBx {
 	position: relative;

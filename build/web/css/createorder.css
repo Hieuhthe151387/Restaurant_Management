@@ -491,6 +491,19 @@ details .rightCard .content .header .inputBx input:hover,
 .details .rightCard .content .infor table tr td:nth-child(3){
 	text-align: center;
 }
+.details .rightCard .content .infor table tr td input{
+	width: 50px;
+    border: none;
+    text-align: center;
+    border-bottom: 1px solid;
+}
+.details .rightCard .content .infor table tr td span.btnf{
+	display: inline-block;
+    width: 20px;
+    border: 1px solid;
+    border-radius: 5px;
+    cursor: pointer;
+}
 
 .details .rightCard .content .total{
 	margin: 10px 0;

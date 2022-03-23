@@ -59,14 +59,6 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
-					<span class="icon"><i class="fa fa-bar-chart" aria-hidden="true"></i></span>
-					<span class="title">
-						Analysis
-					</span>
-					</a>
-				</li>
-				<li>
                                     <a href="employee">
 					<span class="icon"><i class="fa fa-users" aria-hidden="true"></i></span>
 					<span class="title">

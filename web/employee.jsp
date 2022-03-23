@@ -40,7 +40,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="menu">
 					<span class="icon"><i class="fa fa-th-large" aria-hidden="true"></i></span>
 					<span class="title">
 						Menu

@@ -73,7 +73,7 @@
 					</a>
 				</li>
 				<li>
-					<a href="#">
+					<a href="signin.jsp?logout=out">
 					<span class="icon"><i class="fa fa-sign-out" aria-hidden="true"></i></span>
 					<span class="title">
 						Logout
@@ -102,6 +102,7 @@
 				<div class="menu">
 					<div class="menuHeader">
 						<h2>Menu</h2>
+                                                <div class="btn create" onclick="createfood()">New food +</div>
 					</div>
                                         <c:if test="${listproduct!=null}">
 					<table>
@@ -120,13 +121,12 @@
 								<td>${i+1}</td>
 								<td><div class="imageBx"><img src="images/foods.png" alt="foods"/></div></td>
 								<td>${listproduct.get(i).name}</td>
-								<td>${listproduct.get(i).price}</td>
+								<td>${listproduct.get(i).getprice()}</td>
 								<td>${listproduct.get(i).cost}</td>
 							</tr>
                                                     </c:forEach>									
 						</tbody>
 					</table>
-								<div class="create" onclick="createfood()">New food +</div>
                                         </c:if>
 				</div>
 				<div class="rightCard">
@@ -193,13 +193,13 @@
 					</form>
 				</div>
    			</div>
-                            <div class="tag update updateTag <c:if test="${productview==null}">hidden</c:if>">
+                        <div class="tag update updateTag <c:if test="${productview==null}">hidden</c:if>">
 				<div class="cardHeader">
 					<h2>Food infomation</h2>
 					<span class="close" onclick="closeCard()">X</span>
 				</div>
 				<div class="details">
-                                    <form name="foodedit" action="updatemenu" method="post">
+                                    <form name="foodedit" action="menu" method="post">
 						<div class="inputBx">
 							<span class="title">ID</span>
                                                         <input type="text" name="id" id="eid" value="${productview.id}" readonly/>

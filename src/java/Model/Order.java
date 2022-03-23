@@ -152,7 +152,7 @@ public class Order {
     
     public Product getProduct(String id){
         for (Product product : orderdetail) {
-            if(product.getId().equals(id)) return new Product(product);
+            if(product.getId().equals(id)) return product;
         }
         return null;
     }

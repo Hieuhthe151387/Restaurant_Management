@@ -34,7 +34,11 @@
     </servlet>
     <servlet>
         <servlet-name>MenuServlet</servlet-name>
-        <servlet-class>Control.MenuServlet</servlet-class>
+        <servlet-class>Control.TempServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>orderservlet</servlet-name>
+        <servlet-class>Control.orderservlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>server1</servlet-name>
@@ -59,13 +63,16 @@
         <url-pattern>/order</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>MenuServlet</servlet-name>
+        <url-pattern>/temp</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>menu</servlet-name>
-        <url-pattern>/updatemenu</url-pattern>
         <url-pattern>/menu</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>MenuServlet</servlet-name>
-        <url-pattern>/menu/view</url-pattern>
+        <servlet-name>orderservlet</servlet-name>
+        <url-pattern>/createorder</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

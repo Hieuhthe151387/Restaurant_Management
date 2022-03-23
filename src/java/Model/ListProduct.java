@@ -34,6 +34,7 @@ public class ListProduct {
         for(Product p : list){
             if(p.getId().equals(pid)) {
                 Product newp = new Product(p);
+                newp.setQuantity(1);
                 return newp;
             }
         }

@@ -119,8 +119,6 @@ public class customer extends HttpServlet {
             case "u": cust = parseCust(request);
                       db.updateCust(cust);
                       request.setAttribute("message", "updated");
-//                      response.sendRedirect("customer");
-                      processRequest(request, response);
                 break;
 //                remove an cust 
             case "r":db.deleteCust(id);
@@ -141,7 +139,10 @@ public class customer extends HttpServlet {
         if(req.equals("v")||req.equals("c")){
         request.getRequestDispatcher("/customer.jsp").forward(request, response);
         }
-        else processRequest(request, response);
+        else {
+            request.setAttribute("topage", "customer");
+            request.getRequestDispatcher("temp").forward(request, response);
+        }
         
     }
 
